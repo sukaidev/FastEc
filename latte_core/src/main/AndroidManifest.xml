@@ -1,2 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sukaidev.latte_core" />
+    package="com.sukaidev.latte_core" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--<application android:allowBackup="true"-->
+        <!--android:label="Latte"-->
+        <!--android:supportsRtl="true">-->
+
+    <!--</application>-->
+
+</manifest>

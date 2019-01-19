@@ -3,6 +3,7 @@ package com.sukaidev.latte_core.net;
 import com.sukaidev.latte_core.app.ConfigType;
 import com.sukaidev.latte_core.app.Latte;
 
+import java.util.WeakHashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -13,6 +14,17 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  * Created by sukaidev on 2019/01/19.
  */
 public class RestCreator {
+
+    private static final class ParamsHolder{
+
+        private static final WeakHashMap<String,Object> PARAMS = new WeakHashMap<>();
+
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static WeakHashMap<String,Object> getParams(){
+        return ParamsHolder.PARAMS;
+    }
 
     public static RestService getRestService(){
         return RestServiceHolder.REST_SERVICE;

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.WeakHashMap;
 
+import okhttp3.Interceptor;
+
 /**
  * Created by sukaidev on 2019/01/16.
  * 配置构造类.
@@ -14,9 +16,11 @@ import java.util.WeakHashMap;
 public class Configurator {
 
     // 存放配置信息
-    private static final HashMap<String, Object> LATTE_CONFIGS = new HashMap<>();
+    private static final HashMap<Object, Object> LATTE_CONFIGS = new HashMap<>();
     // 存放图标信息
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
+    // 拦截器
+    private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
 
     private Configurator() {
         LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
@@ -26,7 +30,7 @@ public class Configurator {
         return Holder.INSTANCE;
     }
 
-    final HashMap<String, Object> getLatteConfigs() {
+    final HashMap<Object, Object> getLatteConfigs() {
         return LATTE_CONFIGS;
     }
 
@@ -68,6 +72,23 @@ public class Configurator {
      */
     public final Configurator withIcon(IconFontDescriptor descriptor){
         ICONS.add(descriptor);
+        return this;
+    }
+
+    /**
+     * 配置拦截器
+     * @param interceptor
+     * @return
+     */
+    public final Configurator withInterceptor(Interceptor interceptor){
+        INTERCEPTORS.add(interceptor);
+        LATTE_CONFIGS.put(ConfigType.INTERCEPTOR,INTERCEPTORS);
+        return this;
+    }
+
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors){
+        INTERCEPTORS.addAll(interceptors);
+        LATTE_CONFIGS.put(ConfigType.INTERCEPTOR,INTERCEPTORS);
         return this;
     }
 

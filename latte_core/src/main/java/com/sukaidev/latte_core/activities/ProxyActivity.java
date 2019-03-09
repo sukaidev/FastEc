@@ -9,8 +9,9 @@ import com.sukaidev.latte_core.delegates.LatteDelegate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.ContentFrameLayout;
-import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportActivity;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 /**
  * Created by sukaidev on 2019/01/18.
@@ -23,6 +24,9 @@ public abstract class ProxyActivity extends SupportActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initContainer(savedInstanceState);
+
+        OkHttpClient client = new OkHttpClient();
+
     }
 
     @SuppressLint("RestrictedApi")
@@ -31,7 +35,7 @@ public abstract class ProxyActivity extends SupportActivity{
         container.setId(R.id.delegate_container);
         setContentView(container);
         if (savedInstanceState == null){
-            loadRootFragment(R.id.delegate_container, (ISupportFragment) setRootDelegate());
+            loadRootFragment(R.id.delegate_container, setRootDelegate());
         }
     }
 

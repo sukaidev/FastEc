@@ -1,9 +1,12 @@
 package com.sukaidev.latte_core.net;
 
+import android.content.Context;
+
 import com.sukaidev.latte_core.net.callback.IError;
 import com.sukaidev.latte_core.net.callback.IFailure;
 import com.sukaidev.latte_core.net.callback.IRequest;
 import com.sukaidev.latte_core.net.callback.ISuccess;
+import com.sukaidev.latte_core.ui.LoaderStyle;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -17,12 +20,14 @@ import okhttp3.RequestBody;
 public class RestClientBuilder {
 
     private String mUrl;
-    private static final Map<String,Object> mParams = RestCreator.getParams();
+    private static final Map<String, Object> mParams = RestCreator.getParams();
     private IRequest mIRequest;
     private ISuccess mISuccess;
     private IFailure mIFailure;
     private IError mIError;
     private RequestBody mBody;
+    private Context mContext;
+    private LoaderStyle mLoaderStyle;
 
     // 只允许同一个包下的其他类创建对象
     RestClientBuilder() {
@@ -46,6 +51,18 @@ public class RestClientBuilder {
 
     public final RestClientBuilder raw(String raw) {
         this.mBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), raw);
+        return this;
+    }
+
+    public final RestClientBuilder loader(Context context, LoaderStyle loaderStyle) {
+        this.mLoaderStyle = loaderStyle;
+        this.mContext = context;
+        return this;
+    }
+
+    public final RestClientBuilder loader(Context context) {
+        this.mLoaderStyle = LoaderStyle.BallClipRotatePulseIndicator;
+        this.mContext = context;
         return this;
     }
 
@@ -77,7 +94,7 @@ public class RestClientBuilder {
     }
 
     public final RestClient build() {
-        return new RestClient(mUrl, mParams, mIRequest, mISuccess, mIFailure, mIError, mBody);
+        return new RestClient(mUrl, mParams, mIRequest, mISuccess, mIFailure, mIError, mBody, mContext, mLoaderStyle);
     }
 
 }

@@ -14,6 +14,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
  * Created by sukaidev on 2019/01/18.
+ * Fragment基类.
  */
 public abstract class BaseDelegate extends SwipeBackFragment {
 

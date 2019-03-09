@@ -36,6 +36,7 @@ public class RestCreator {
 
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .client(OkHttpHodler.OKHPPT_CLIENT)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
     }

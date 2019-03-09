@@ -1,10 +1,14 @@
 package com.sukaidev.latte_core.net;
 
+import android.content.Context;
+
 import com.sukaidev.latte_core.net.callback.IError;
 import com.sukaidev.latte_core.net.callback.IFailure;
 import com.sukaidev.latte_core.net.callback.IRequest;
 import com.sukaidev.latte_core.net.callback.ISuccess;
 import com.sukaidev.latte_core.net.callback.RequestCallback;
+import com.sukaidev.latte_core.ui.LatteLoader;
+import com.sukaidev.latte_core.ui.LoaderStyle;
 
 import java.util.Map;
 
@@ -24,14 +28,19 @@ public class RestClient {
     private final IFailure FAILURE;
     private final IError ERROR;
     private final RequestBody BODY;
+    private final Context CONTEXT;
+    private final LoaderStyle LOADER_STYLE;
 
-    public RestClient(String url,
-                      Map<String, Object> params,
-                      IRequest request,
-                      ISuccess success,
-                      IFailure failure,
-                      IError error,
-                      RequestBody body) {
+    RestClient(String url,
+               Map<String, Object> params,
+               IRequest request,
+               ISuccess success,
+               IFailure failure,
+               IError error,
+               RequestBody body,
+               Context context,
+               LoaderStyle loaderStyle
+    ) {
         this.URL = url;
         mParams.putAll(params);
         this.REQUEST = request;
@@ -39,6 +48,8 @@ public class RestClient {
         this.FAILURE = failure;
         this.ERROR = error;
         this.BODY = body;
+        this.CONTEXT = context;
+        this.LOADER_STYLE = loaderStyle;
     }
 
     public static RestClientBuilder builder() {
@@ -51,6 +62,10 @@ public class RestClient {
 
         if (REQUEST != null) {
             REQUEST.onRequestStart();
+        }
+
+        if (LOADER_STYLE != null) {
+            LatteLoader.showLoading(CONTEXT, LOADER_STYLE);
         }
 
         switch (method) {
@@ -75,23 +90,29 @@ public class RestClient {
         }
     }
 
-    private Callback<String> getRequestCallBack(){
-        return new RequestCallback(REQUEST,SUCCESS,FAILURE,ERROR);
+    private Callback<String> getRequestCallBack() {
+        return new RequestCallback(
+                REQUEST,
+                SUCCESS,
+                FAILURE,
+                ERROR,
+                LOADER_STYLE);
     }
 
-    public final void get(){
+    public final void get() {
         request(HttpMethod.GET);
     }
 
 
-    public final void post(){
+    public final void post() {
         request(HttpMethod.POST);
     }
 
-    public final void put(){
+    public final void put() {
         request(HttpMethod.PUT);
     }
-    public final void delete(){
+
+    public final void delete() {
         request(HttpMethod.DELETE);
     }
 }

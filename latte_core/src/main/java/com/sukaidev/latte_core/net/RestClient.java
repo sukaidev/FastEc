@@ -26,7 +26,7 @@ import retrofit2.Callback;
 public class RestClient {
 
     private final String URL;
-    private static final Map<String, Object> mParams = RestCreator.getParams();
+    private static final Map<String, Object> PARAMS = RestCreator.getParams();
     private final IRequest REQUEST;
     private final String DOWNLOAD_DIR;
     private final String EXTENSION;
@@ -54,7 +54,7 @@ public class RestClient {
                LoaderStyle loaderStyle
     ) {
         this.URL = url;
-        mParams.putAll(params);
+        PARAMS.putAll(params);
         this.REQUEST = request;
         this.DOWNLOAD_DIR = downloadDir;
         this.EXTENSION = extension;
@@ -86,22 +86,22 @@ public class RestClient {
 
         switch (method) {
             case GET:
-                call = service.get(URL, mParams);
+                call = service.get(URL, PARAMS);
                 break;
             case POST:
-                call = service.post(URL, mParams);
+                call = service.post(URL, PARAMS);
                 break;
             case POST_RAW:
                 call = service.postRaw(URL, BODY);
                 break;
             case PUT:
-                call = service.put(URL, mParams);
+                call = service.put(URL, PARAMS);
                 break;
             case PUT_RAW:
                 call = service.putRaw(URL, BODY);
                 break;
             case DELETE:
-                call = service.delete(URL, mParams);
+                call = service.delete(URL, PARAMS);
                 break;
             case UPLOAD:
                 final RequestBody requestBody = RequestBody.create(
@@ -137,7 +137,7 @@ public class RestClient {
         if (BODY == null) {
             request(HttpMethod.POST);
         } else {
-            if (!mParams.isEmpty()) {
+            if (!PARAMS.isEmpty()) {
                 throw new RuntimeException("params must be null!");
             }
             request(HttpMethod.POST_RAW);
@@ -148,7 +148,7 @@ public class RestClient {
         if (BODY == null) {
             request(HttpMethod.PUT);
         } else {
-            if (!mParams.isEmpty()) {
+            if (!PARAMS.isEmpty()) {
                 throw new RuntimeException("params must be null!");
             }
             request(HttpMethod.PUT_RAW);

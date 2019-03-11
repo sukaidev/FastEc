@@ -6,7 +6,7 @@ import com.sukaidev.latte_core.net.callback.IError;
 import com.sukaidev.latte_core.net.callback.IFailure;
 import com.sukaidev.latte_core.net.callback.IRequest;
 import com.sukaidev.latte_core.net.callback.ISuccess;
-import com.sukaidev.latte_core.ui.LoaderStyle;
+import com.sukaidev.latte_core.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;

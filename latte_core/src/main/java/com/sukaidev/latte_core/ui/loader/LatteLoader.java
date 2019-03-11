@@ -1,4 +1,4 @@
-package com.sukaidev.latte_core.ui;
+package com.sukaidev.latte_core.ui.loader;
 
 import android.content.Context;
 import android.view.Gravity;

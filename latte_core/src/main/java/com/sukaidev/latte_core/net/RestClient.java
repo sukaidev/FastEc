@@ -8,8 +8,8 @@ import com.sukaidev.latte_core.net.callback.IRequest;
 import com.sukaidev.latte_core.net.callback.ISuccess;
 import com.sukaidev.latte_core.net.callback.RequestCallback;
 import com.sukaidev.latte_core.net.download.DownloadHandler;
-import com.sukaidev.latte_core.ui.LatteLoader;
-import com.sukaidev.latte_core.ui.LoaderStyle;
+import com.sukaidev.latte_core.ui.loader.LatteLoader;
+import com.sukaidev.latte_core.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;

@@ -2,8 +2,8 @@ package com.sukaidev.latte_core.net.callback;
 
 import android.os.Handler;
 
-import com.sukaidev.latte_core.ui.LatteLoader;
-import com.sukaidev.latte_core.ui.LoaderStyle;
+import com.sukaidev.latte_core.ui.loader.LatteLoader;
+import com.sukaidev.latte_core.ui.loader.LoaderStyle;
 
 import retrofit2.Call;
 import retrofit2.Callback;

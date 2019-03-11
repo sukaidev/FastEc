@@ -1,4 +1,4 @@
-package com.sukaidev.latte_core.ui;
+package com.sukaidev.latte_core.ui.loader;
 
 import com.wang.avi.indicators.BallBeatIndicator;
 import com.wang.avi.indicators.BallClipRotateIndicator;

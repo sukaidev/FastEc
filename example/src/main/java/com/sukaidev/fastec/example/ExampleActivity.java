@@ -4,6 +4,7 @@ package com.sukaidev.fastec.example;
 import android.os.Bundle;
 
 import com.sukaidev.latte.ec.laucher.LauncherDelegate;
+import com.sukaidev.latte.ec.sign.SignUpDelegate;
 import com.sukaidev.latte_core.activities.ProxyActivity;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
 
@@ -24,6 +25,6 @@ public class ExampleActivity extends ProxyActivity {
 
     @Override
     public LatteDelegate setRootDelegate() {
-        return new LauncherDelegate();
+        return new SignUpDelegate();
     }
 }

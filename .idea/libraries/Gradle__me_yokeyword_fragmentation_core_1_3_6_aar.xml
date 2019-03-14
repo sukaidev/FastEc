@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: me.yokeyword:fragmentation-core:1.3.6@aar">
     <ANNOTATIONS>
-      <root url="jar://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-core-1.3.6.aar/c78f262c38427db0cb47d72cc068864b/annotations.zip!/" />
+      <root url="jar://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-core-1.3.6.aar/3f7231e4fbdf426077eb965fb8139fd9/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-core-1.3.6.aar/c78f262c38427db0cb47d72cc068864b/jars/classes.jar!/" />
-      <root url="file://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-core-1.3.6.aar/c78f262c38427db0cb47d72cc068864b/res" />
+      <root url="jar://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-core-1.3.6.aar/3f7231e4fbdf426077eb965fb8139fd9/jars/classes.jar!/" />
+      <root url="file://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-core-1.3.6.aar/3f7231e4fbdf426077eb965fb8139fd9/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

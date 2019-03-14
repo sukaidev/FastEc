@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: me.yokeyword:fragmentation-swipeback:1.3.6@aar">
     <ANNOTATIONS>
-      <root url="jar://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-swipeback-1.3.6.aar/a4257d168d4d5d5ec54f0ec66f5f36e2/annotations.zip!/" />
+      <root url="jar://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-swipeback-1.3.6.aar/0903c2e82813fc2d1be05d597458bc1b/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-swipeback-1.3.6.aar/a4257d168d4d5d5ec54f0ec66f5f36e2/jars/classes.jar!/" />
-      <root url="file://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-swipeback-1.3.6.aar/a4257d168d4d5d5ec54f0ec66f5f36e2/res" />
+      <root url="jar://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-swipeback-1.3.6.aar/0903c2e82813fc2d1be05d597458bc1b/jars/classes.jar!/" />
+      <root url="file://D:/Android/.gradle/caches/transforms-1/files-1.1/jetified-fragmentation-swipeback-1.3.6.aar/0903c2e82813fc2d1be05d597458bc1b/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

@@ -9,6 +9,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.R2;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
+import com.sukaidev.latte_core.net.RestClient;
+import com.sukaidev.latte_core.net.callback.ISuccess;
+import com.sukaidev.latte_core.util.log.LatteLogger;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -33,17 +36,17 @@ public class SignUpDelegate extends LatteDelegate {
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
-/*            RestClient.builder()
-                    .url("sign_up")
-                    .params("","")
+            RestClient.builder()
+                    .url("https://www.sukaidev.top/api/FastEC/user_profile.php")
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
-                            
+                            LatteLogger.json("USER_PROFILE",response);
+                            SignHandler.onSignUp(response);
                         }
                     })
                     .build()
-                    .post();*/
+                    .post();
             Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
         }
     }

@@ -59,4 +59,8 @@ dependencies {
     api 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
     // JSON
     api 'com.alibaba:fastjson:1.2.55'
+    // GreenDao
+    api 'org.greenrobot:greendao:3.2.2'
+    // Log
+    api 'com.orhanobut:logger:2.2.0'
 }

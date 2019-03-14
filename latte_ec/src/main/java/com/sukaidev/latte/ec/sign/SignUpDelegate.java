@@ -1,5 +1,6 @@
 package com.sukaidev.latte.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -33,6 +34,16 @@ public class SignUpDelegate extends LatteDelegate {
     @BindView(R2.id.edit_sign_up_password_reply)
     TextInputEditText mRePassword;
 
+    private ISignListener mISignListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener){
+            mISignListener = (ISignListener) activity;
+        }
+    }
+
     @OnClick(R2.id.btn_sign_up)
     void onClickSignUp() {
         if (checkForm()) {
@@ -42,12 +53,11 @@ public class SignUpDelegate extends LatteDelegate {
                         @Override
                         public void onSuccess(String response) {
                             LatteLogger.json("USER_PROFILE",response);
-                            SignHandler.onSignUp(response);
+                            SignHandler.onSignUp(response,mISignListener);
                         }
                     })
                     .build()
                     .post();
-            Toast.makeText(getContext(), "验证通过", Toast.LENGTH_SHORT).show();
         }
     }
     @OnClick(R2.id.tv_link_sign_in)

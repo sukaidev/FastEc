@@ -1,11 +1,16 @@
 package com.sukaidev.latte.ec.laucher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.R2;
+import com.sukaidev.latte_core.app.AccountManager;
+import com.sukaidev.latte_core.app.IUserChecker;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
+import com.sukaidev.latte_core.ui.launcher.ILauncherListener;
+import com.sukaidev.latte_core.ui.launcher.OnLauncherFinishTag;
 import com.sukaidev.latte_core.ui.launcher.ScrollLauncherTag;
 import com.sukaidev.latte_core.util.storage.LattePreference;
 import com.sukaidev.latte_core.util.timer.BaseTimerTask;
@@ -28,6 +33,8 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
 
     private int mCount = 5;
 
+    private ILauncherListener mILauncherListener = null;
+
     @BindView(R2.id.tv_launcher_timer)
     AppCompatTextView mTvTimer = null;
 
@@ -47,6 +54,14 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener){
+            mILauncherListener = (ILauncherListener) activity;
+        }
+    }
+
+    @Override
     public Object setLayout() {
         return R.layout.delegate_laucher;
     }
@@ -62,6 +77,21 @@ public class LauncherDelegate extends LatteDelegate implements ITimerListener {
             start(new LauncherScrollDelegate(),SINGLETASK);
         }else {
             // 检查用户是否登录了APP
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null){
+                        mILauncherListener.onLauncherFinished(OnLauncherFinishTag.SIGNED);
+                    }
+                }
+
+                @Override
+                public void onNotSignIn() {
+                    if (mILauncherListener != null){
+                        mILauncherListener.onLauncherFinished(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 

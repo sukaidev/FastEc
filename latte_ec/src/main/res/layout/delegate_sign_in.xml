@@ -97,7 +97,7 @@
                 android:id="@+id/icon_sign_in_wechat"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:text="@string/fa_weixin"
                 android:textColor="#04b00f"
                 android:textSize="40sp" />

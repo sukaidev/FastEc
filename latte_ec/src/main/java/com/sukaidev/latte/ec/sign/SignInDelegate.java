@@ -1,5 +1,6 @@
 package com.sukaidev.latte.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -9,6 +10,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.R2;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
+import com.sukaidev.latte_core.net.RestClient;
+import com.sukaidev.latte_core.net.callback.ISuccess;
+import com.sukaidev.latte_core.util.log.LatteLogger;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -24,10 +28,31 @@ public class SignInDelegate extends LatteDelegate {
     @BindView(R2.id.edit_sign_in_password)
     TextInputEditText mPassword;
 
+    private ISignListener mISignListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener){
+            mISignListener = (ISignListener) activity;
+        }
+    }
+
+
     @OnClick(R2.id.btn_sign_in)
     void onClickSignIn() {
         if (checkForm()){
-            Toast.makeText(getContext(), "登录成功", Toast.LENGTH_SHORT).show();
+            RestClient.builder()
+                    .url("https://www.sukaidev.top/api/FastEC/user_profile.php")
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            LatteLogger.json("USER_PROFILE",response);
+                            SignHandler.onSignIn(response,mISignListener);
+                        }
+                    })
+                    .build()
+                    .post();
         }
     }
     @OnClick(R2.id.icon_sign_in_wechat)

@@ -1,5 +1,6 @@
 package com.sukaidev.latte.ec.laucher;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -7,8 +8,12 @@ import android.widget.Toast;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.sukaidev.latte.ec.R;
+import com.sukaidev.latte_core.app.AccountManager;
+import com.sukaidev.latte_core.app.IUserChecker;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
+import com.sukaidev.latte_core.ui.launcher.ILauncherListener;
 import com.sukaidev.latte_core.ui.launcher.LauncherHolderCreator;
+import com.sukaidev.latte_core.ui.launcher.OnLauncherFinishTag;
 import com.sukaidev.latte_core.ui.launcher.ScrollLauncherTag;
 import com.sukaidev.latte_core.util.storage.LattePreference;
 
@@ -23,6 +28,7 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
 
     private ConvenientBanner<Integer> mConvenientBanner = null;
     private static final ArrayList<Integer> INTEGERS = new ArrayList<>();
+    private ILauncherListener mILauncherListener = null;
 
     private void initBanner() {
         if (INTEGERS.size() == 0) {
@@ -38,6 +44,14 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL)
                 .setOnItemClickListener(this)
                 .setCanLoop(false);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ILauncherListener){
+            mILauncherListener = (ILauncherListener) activity;
+        }
     }
 
     @Override
@@ -57,8 +71,22 @@ public class LauncherScrollDelegate extends LatteDelegate implements OnItemClick
         if (position == INTEGERS.size() - 1) {
             Toast.makeText(getContext(), ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name()+"", Toast.LENGTH_SHORT).show();
             LattePreference.setAppFlag(ScrollLauncherTag.HAS_FIRST_LAUNCHER_APP.name(),true);
-            // 检查用户是否已经登录
+            // 检查用户是否登录了APP
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    if (mILauncherListener != null){
+                        mILauncherListener.onLauncherFinished(OnLauncherFinishTag.SIGNED);
+                    }
+                }
 
+                @Override
+                public void onNotSignIn() {
+                    if (mILauncherListener != null){
+                        mILauncherListener.onLauncherFinished(OnLauncherFinishTag.NOT_SIGNED);
+                    }
+                }
+            });
         }
     }
 }

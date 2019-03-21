@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.sukaidev.latte.ec.laucher.LauncherDelegate;
+import com.sukaidev.latte.ec.main.EcBottomDelegate;
+import com.sukaidev.latte.ec.main.index.IndexDelegate;
 import com.sukaidev.latte.ec.sign.ISignListener;
 import com.sukaidev.latte.ec.sign.SignInDelegate;
 import com.sukaidev.latte.ec.sign.SignUpDelegate;
 import com.sukaidev.latte_core.activities.ProxyActivity;
+import com.sukaidev.latte_core.app.Latte;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
 import com.sukaidev.latte_core.ui.launcher.ILauncherListener;
 import com.sukaidev.latte_core.ui.launcher.OnLauncherFinishTag;
@@ -26,6 +29,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         if (actionBar != null) {
             actionBar.hide();
         }
+        Latte.getConfigurator().withActivity(this);
     }
 
     @Override
@@ -36,11 +40,13 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
     @Override
     public void onSignInSuccess() {
         Toast.makeText(this, "登录成功！", Toast.LENGTH_SHORT).show();
+        startWithPop(new EcBottomDelegate());
     }
 
     @Override
     public void onSignUpSuccess() {
-        Toast.makeText(this, "注册成功！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "注册成功！请登录", Toast.LENGTH_SHORT).show();
+        startWithPop(new SignInDelegate());
     }
 
     @Override
@@ -48,7 +54,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         switch (tag) {
             case SIGNED:
                 Toast.makeText(this, "启动结束，用户已登录", Toast.LENGTH_LONG).show();
-                startWithPop(new ExampleDelegate());
+                startWithPop(new EcBottomDelegate());
                 break;
             case NOT_SIGNED:
                 Toast.makeText(this, "启动结束，用户未登录", Toast.LENGTH_LONG).show();

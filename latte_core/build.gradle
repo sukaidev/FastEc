@@ -63,4 +63,7 @@ dependencies {
     api 'org.greenrobot:greendao:3.2.2'
     // Log
     api 'com.orhanobut:logger:2.2.0'
+    // 微信依赖（包含统计）
+    //noinspection GradleDynamicVersion
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }

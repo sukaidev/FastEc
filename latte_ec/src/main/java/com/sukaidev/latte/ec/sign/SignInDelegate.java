@@ -13,6 +13,8 @@ import com.sukaidev.latte_core.delegates.LatteDelegate;
 import com.sukaidev.latte_core.net.RestClient;
 import com.sukaidev.latte_core.net.callback.ISuccess;
 import com.sukaidev.latte_core.util.log.LatteLogger;
+import com.sukaidev.latte_core.wechat.LatteWeChat;
+import com.sukaidev.latte_core.wechat.callbacks.IWeChatSignInCallback;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -33,7 +35,7 @@ public class SignInDelegate extends LatteDelegate {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof ISignListener){
+        if (activity instanceof ISignListener) {
             mISignListener = (ISignListener) activity;
         }
     }
@@ -41,24 +43,33 @@ public class SignInDelegate extends LatteDelegate {
 
     @OnClick(R2.id.btn_sign_in)
     void onClickSignIn() {
-        if (checkForm()){
+        if (checkForm()) {
             RestClient.builder()
                     .url("https://www.sukaidev.top/api/FastEC/user_profile.php")
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
-                            LatteLogger.json("USER_PROFILE",response);
-                            SignHandler.onSignIn(response,mISignListener);
+                            LatteLogger.json("USER_PROFILE", response);
+                            SignHandler.onSignIn(response, mISignListener);
                         }
                     })
                     .build()
                     .post();
         }
     }
+
     @OnClick(R2.id.icon_sign_in_wechat)
     void onClickWechat() {
         // 微信登录逻辑
+        Toast.makeText(getActivity(), "暂不支持微信登录！", Toast.LENGTH_LONG).show();
+        /*LatteWeChat.getInstance().onSignSuccess(new IWeChatSignInCallback() {
+            @Override
+            public void onSignInSuccess(String userInfo) {
+
+            }
+        }).signIn();*/
     }
+
     @OnClick(R2.id.tv_link_sign_up)
     void onClickLink() {
         start(new SignUpDelegate());

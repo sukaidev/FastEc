@@ -1,5 +1,8 @@
 package com.sukaidev.latte_core.app;
 
+import android.app.Activity;
+import android.os.Handler;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
@@ -20,9 +23,12 @@ public class Configurator {
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
     // 拦截器
     private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
+    // Handler
+    private static final Handler HANDLER = new Handler();
 
     private Configurator() {
         LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY.name(), false);
+        LATTE_CONFIGS.put(ConfigKeys.HANDLER.name(), HANDLER);
     }
 
     public static Configurator getInstance() {
@@ -44,6 +50,7 @@ public class Configurator {
 
     /**
      * 配置ApiHost
+     *
      * @param host
      * @return
      */
@@ -66,28 +73,45 @@ public class Configurator {
 
     /**
      * 配置Icon
+     *
      * @param descriptor
      * @return
      */
-    public final Configurator withIcon(IconFontDescriptor descriptor){
+    public final Configurator withIcon(IconFontDescriptor descriptor) {
         ICONS.add(descriptor);
         return this;
     }
 
     /**
      * 配置拦截器
+     *
      * @param interceptor
      * @return
      */
-    public final Configurator withInterceptor(Interceptor interceptor){
+    public final Configurator withInterceptor(Interceptor interceptor) {
         INTERCEPTORS.add(interceptor);
-        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR.name(),INTERCEPTORS);
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR.name(), INTERCEPTORS);
         return this;
     }
 
-    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors){
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors) {
         INTERCEPTORS.addAll(interceptors);
-        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR.name(),INTERCEPTORS);
+        LATTE_CONFIGS.put(ConfigKeys.INTERCEPTOR.name(), INTERCEPTORS);
+        return this;
+    }
+
+    public final Configurator withWeChatAppId(String appId) {
+        LATTE_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID.name(), appId);
+        return this;
+    }
+
+    public final Configurator withWeChatAppSecret(String appSecret) {
+        LATTE_CONFIGS.put(ConfigKeys.WE_CHAT_APP_SECRET.name(), appSecret);
+        return this;
+    }
+
+    public final Configurator withActivity(Activity activity) {
+        LATTE_CONFIGS.put(ConfigKeys.ACTIVITY.name(), activity);
         return this;
     }
 

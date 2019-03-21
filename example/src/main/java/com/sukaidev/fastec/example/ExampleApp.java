@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Debug;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.joanzapata.iconify.fonts.IoniconsModule;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.sukaidev.latte.ec.database.DatabaseManager;
@@ -27,6 +28,8 @@ public class ExampleApp extends Application {
                 .withIcon(new FontEcModule())
                 .withApiHost("http://10.0.2.2")
                 .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withWeChatAppId("")
+                .withWeChatAppSecret("")
                 .configure();
         DatabaseManager.getInstance().init(this);
     }

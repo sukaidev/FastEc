@@ -1,0 +1,41 @@
+{
+  "code": 0,
+  "message": "OK",
+  "total": 100,
+  "page_size": 6,
+  "data": [
+    {
+      "goodsId": 0,
+      "spanSize": 4,
+      "banners": [
+        "http://47.107.74.101:8080/Resources/CNShop/banners/%E5%8D%8E%E4%B8%BAnova.jpg",
+        "http://47.107.74.101:8080/Resources/CNShop/banners/%E5%A4%8F%E6%99%AE%E6%B8%85%E5%87%89%E4%B8%80%E5%A4%8F.jpg",
+        "http://47.107.74.101:8080/Resources/CNShop/banners/%E5%B0%8F%E7%B1%B3%E7%94%B5%E8%A7%86.jpg"
+      ]
+    },
+    {
+      "goodsId": 1,
+      "text": "测试描述1",
+      "imageUrl": "http://47.107.74.101:8080/Resources/CNShop/banners/%E5%8D%8E%E4%B8%BAnova.jpg",
+      "spanSize": 4
+    },
+    {
+      "goodsId": 2,
+      "text": "测试描述2",
+      "imageUrl": "http://47.107.74.101:8080/Resources/CNShop/banners/%E5%8D%8E%E4%B8%BAnova.jpg",
+      "spanSize": 2
+    },
+    {
+      "goodsId": 3,
+      "text": "测试描述3",
+      "imageUrl": "http://47.107.74.101:8080/Resources/CNShop/banners/%E5%8D%8E%E4%B8%BAnova.jpg",
+      "spanSize": 2
+    },
+    {
+      "goodsId": 4,
+      "text": "测试描述4",
+      "imageUrl": "http://47.107.74.101:8080/Resources/CNShop/banners/%E5%8D%8E%E4%B8%BAnova.jpg",
+      "spanSize": 2
+    }
+  ]
+}

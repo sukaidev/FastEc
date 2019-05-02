@@ -27,7 +27,7 @@ public abstract class BaseInterceptor implements Interceptor {
         return request.url().queryParameter(key);
     }
 
-    protected LinkedHashMap<String, String> getBodyParameters(Chain chain) {
+    LinkedHashMap<String, String> getBodyParameters(Chain chain) {
         final FormBody formBody = (FormBody) chain.request().body();
         final LinkedHashMap<String, String> params = new LinkedHashMap<>();
         int size = formBody.size();

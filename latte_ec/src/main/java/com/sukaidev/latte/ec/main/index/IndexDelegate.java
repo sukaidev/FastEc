@@ -2,11 +2,16 @@ package com.sukaidev.latte.ec.main.index;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.R2;
 import com.sukaidev.latte_core.delegates.bottom.BottomItemDelegate;
+import com.sukaidev.latte_core.net.RestClient;
+import com.sukaidev.latte_core.net.callback.ISuccess;
+import com.sukaidev.latte_core.ui.recycler.MultipleFields;
+import com.sukaidev.latte_core.ui.recycler.MultipleItemEntity;
 import com.sukaidev.latte_core.ui.refresh.RefreshHandler;
 
 import androidx.annotation.Nullable;
@@ -14,6 +19,9 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import java.util.ArrayList;
+
 import butterknife.BindView;
 
 /**
@@ -47,6 +55,7 @@ public class IndexDelegate extends BottomItemDelegate {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initRefreshLayout();
+        mRefreshHandler.firstPage("index.php");
     }
 
     @Override
@@ -57,5 +66,19 @@ public class IndexDelegate extends BottomItemDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mRefreshHandler = new RefreshHandler(mRefreshLayout);
+        RestClient.builder()
+                .url("index.php")
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+                        final IndexDataConverter converter = new IndexDataConverter();
+                        converter.setJsonData(response);
+                        final ArrayList<MultipleItemEntity> list = converter.convert();
+                        final String image = list.get(1).getField(MultipleFields.IMAGE_URL);
+                        Toast.makeText(getContext(), image, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .build()
+                .get();
     }
 }

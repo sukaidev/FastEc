@@ -48,7 +48,7 @@ public class SignUpDelegate extends LatteDelegate {
     void onClickSignUp() {
         if (checkForm()) {
             RestClient.builder()
-                    .url("https://www.sukaidev.top/api/FastEC/user_profile.php")
+                    .url("user_profile.php")
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {

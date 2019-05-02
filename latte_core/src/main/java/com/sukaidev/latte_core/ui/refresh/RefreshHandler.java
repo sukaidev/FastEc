@@ -1,6 +1,10 @@
 package com.sukaidev.latte_core.ui.refresh;
 
+import android.widget.Toast;
+
 import com.sukaidev.latte_core.app.Latte;
+import com.sukaidev.latte_core.net.RestClient;
+import com.sukaidev.latte_core.net.callback.ISuccess;
 
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -15,6 +19,20 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener {
         this.REFRESH_LAYOUT = refresh_layout;
         REFRESH_LAYOUT.setOnRefreshListener(this);
     }
+
+    public void firstPage(String url) {
+        RestClient.builder()
+                .url(url)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+
+                    }
+                })
+                .build()
+                .get();
+    }
+
 
     @Override
     public void onRefresh() {

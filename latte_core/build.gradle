@@ -57,8 +57,8 @@ dependencies {
     // Banner
     api 'com.bigkoo:convenientbanner:2.0.5'
     api 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
-    // JSON
-    api 'com.alibaba:fastjson:1.2.55'
+    // FastJson
+    api 'com.alibaba:fastjson:1.1.71.android'
     // GreenDao
     api 'org.greenrobot:greendao:3.2.2'
     // Log
@@ -66,4 +66,6 @@ dependencies {
     // 微信依赖（包含统计）
     //noinspection GradleDynamicVersion
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    // BaseRecyclerViewAdapterHelper
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }

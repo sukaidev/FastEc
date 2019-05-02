@@ -23,7 +23,6 @@ public class RestCreator {
 
     }
 
-    @SuppressWarnings("WeakerAccess")
     public static WeakHashMap<String,Object> getParams(){
         return ParamsHolder.PARAMS;
     }

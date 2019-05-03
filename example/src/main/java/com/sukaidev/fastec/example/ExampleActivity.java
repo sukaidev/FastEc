@@ -19,6 +19,8 @@ import com.sukaidev.latte_core.ui.launcher.OnLauncherFinishTag;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
+import qiu.niorgai.StatusBarCompat;
+
 
 public class ExampleActivity extends ProxyActivity implements ISignListener, ILauncherListener {
 
@@ -30,11 +32,12 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
             actionBar.hide();
         }
         Latte.getConfigurator().withActivity(this);
+        StatusBarCompat.translucentStatusBar(this, true);
     }
 
     @Override
     public LatteDelegate setRootDelegate() {
-        return new LauncherDelegate();
+        return new EcBottomDelegate();
     }
 
     @Override
@@ -59,8 +62,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
             case NOT_SIGNED:
                 Toast.makeText(this, "启动结束，用户未登录", Toast.LENGTH_LONG).show();
                 // 启动Fragment并且清顶
-//                startWithPop(new SignInDelegate());
-                startWithPop(new EcBottomDelegate());
+                startWithPop(new SignInDelegate());
                 break;
             default:
                 break;

@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by sukaidev on 2019/05/02.
  */
-public class MultipleRecyclerViewAdapter
+public class MultipleRecyclerAdapter
         extends BaseMultiItemQuickAdapter<MultipleItemEntity, MultipleViewHolder>
         implements BaseQuickAdapter.SpanSizeLookup, OnItemClickListener {
 
@@ -28,17 +28,17 @@ public class MultipleRecyclerViewAdapter
     // 确保初始化一次banner，防止重复加载
     private boolean mIsInitBanner = false;
 
-    protected MultipleRecyclerViewAdapter(List<MultipleItemEntity> data) {
+    protected MultipleRecyclerAdapter(List<MultipleItemEntity> data) {
         super(data);
         init();
     }
 
-    public static MultipleRecyclerViewAdapter create(List<MultipleItemEntity> data) {
-        return new MultipleRecyclerViewAdapter(data);
+    public static MultipleRecyclerAdapter create(List<MultipleItemEntity> data) {
+        return new MultipleRecyclerAdapter(data);
     }
 
-    public static MultipleRecyclerViewAdapter create(DataConverter converter) {
-        return new MultipleRecyclerViewAdapter(converter.convert());
+    public static MultipleRecyclerAdapter create(DataConverter converter) {
+        return new MultipleRecyclerAdapter(converter.convert());
     }
 
     private void init() {

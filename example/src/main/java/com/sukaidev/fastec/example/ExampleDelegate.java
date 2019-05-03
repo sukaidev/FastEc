@@ -31,7 +31,7 @@ public class ExampleDelegate extends LatteDelegate {
 
     }
 
-    private void testRestClient(){
+/*    private void testRestClient(){
         RestClient.builder()
                 .url("http://10.0.2.2/index")
                 .loader(getContext())
@@ -55,5 +55,5 @@ public class ExampleDelegate extends LatteDelegate {
                     }
                 })
                 .build().get();
-    }
+    }*/
 }

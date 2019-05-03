@@ -10,6 +10,7 @@ import com.sukaidev.latte.ec.R2;
 import com.sukaidev.latte_core.delegates.bottom.BottomItemDelegate;
 import com.sukaidev.latte_core.net.RestClient;
 import com.sukaidev.latte_core.net.callback.ISuccess;
+import com.sukaidev.latte_core.ui.recycler.BaseDecoration;
 import com.sukaidev.latte_core.ui.recycler.MultipleFields;
 import com.sukaidev.latte_core.ui.recycler.MultipleItemEntity;
 import com.sukaidev.latte_core.ui.refresh.RefreshHandler;
@@ -17,6 +18,8 @@ import com.sukaidev.latte_core.ui.refresh.RefreshHandler;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -51,10 +54,17 @@ public class IndexDelegate extends BottomItemDelegate {
         mRefreshLayout.setProgressViewOffset(true, 120, 300);
     }
 
+    private void initRecyclerView() {
+        final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.addItemDecoration(BaseDecoration.create(getResources().getColor(R.color.app_background), 5));
+    }
+
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         initRefreshLayout();
+        initRecyclerView();
         mRefreshHandler.firstPage("index.php");
     }
 
@@ -65,8 +75,8 @@ public class IndexDelegate extends BottomItemDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        mRefreshHandler = new RefreshHandler(mRefreshLayout);
-        RestClient.builder()
+        mRefreshHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, new IndexDataConverter());
+/*        RestClient.builder()
                 .url("index.php")
                 .success(new ISuccess() {
                     @Override
@@ -79,6 +89,6 @@ public class IndexDelegate extends BottomItemDelegate {
                     }
                 })
                 .build()
-                .get();
+                .get();*/
     }
 }

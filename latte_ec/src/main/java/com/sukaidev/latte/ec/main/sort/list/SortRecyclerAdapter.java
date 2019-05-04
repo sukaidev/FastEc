@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat;
 
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.main.sort.SortDelegate;
+import com.sukaidev.latte.ec.main.sort.content.ContentDelegate;
+import com.sukaidev.latte_core.delegates.LatteDelegate;
 import com.sukaidev.latte_core.ui.recycler.ItemType;
 import com.sukaidev.latte_core.ui.recycler.MultipleFields;
 import com.sukaidev.latte_core.ui.recycler.MultipleItemEntity;
@@ -51,11 +53,12 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
                             notifyItemChanged(mPrePosition);
 
                             // 更新选中的item
-                            entity.setField(MultipleFields.TAG,true);
+                            entity.setField(MultipleFields.TAG, true);
                             notifyItemChanged(currentPosition);
                             mPrePosition = currentPosition;
 
                             final int contentId = getData().get(currentPosition).getField(MultipleFields.ID);
+                            showContent(contentId);
                         }
                     }
                 });
@@ -75,6 +78,18 @@ public class SortRecyclerAdapter extends MultipleRecyclerAdapter {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void showContent(int contentId) {
+        final ContentDelegate delegate = ContentDelegate.newInstance(contentId);
+        switchContent(delegate);
+    }
+
+    private void switchContent(ContentDelegate delegate) {
+        final LatteDelegate contentDelegate = DELEGATE.findChildFragment(ContentDelegate.class);
+        if (contentDelegate != null) {
+            contentDelegate.replaceFragment(delegate, false);
         }
     }
 }

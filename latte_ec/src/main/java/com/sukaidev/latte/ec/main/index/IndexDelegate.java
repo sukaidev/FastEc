@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.R2;
+import com.sukaidev.latte.ec.main.EcBottomDelegate;
 import com.sukaidev.latte_core.delegates.bottom.BottomItemDelegate;
 import com.sukaidev.latte_core.net.RestClient;
 import com.sukaidev.latte_core.net.callback.ISuccess;
@@ -58,6 +59,8 @@ public class IndexDelegate extends BottomItemDelegate {
         final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.addItemDecoration(BaseDecoration.create(getResources().getColor(R.color.app_background), 5));
+        final EcBottomDelegate ecBottomDelegate = getParentDelegate();
+        mRecyclerView.addOnItemTouchListener(IndexItemClickListener.create(ecBottomDelegate));
     }
 
     @Override

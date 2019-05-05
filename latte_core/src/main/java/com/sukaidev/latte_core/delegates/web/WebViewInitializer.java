@@ -1,5 +1,6 @@
 package com.sukaidev.latte_core.delegates.web;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -10,6 +11,7 @@ import android.webkit.WebView;
  */
 public class WebViewInitializer {
 
+    @SuppressLint("SetJavaScriptEnabled")
     public WebView createWebView(WebView webView) {
         WebView.setWebContentsDebuggingEnabled(true);
         // 禁止横向滚动
@@ -27,6 +29,7 @@ public class WebViewInitializer {
         });
         // 初始化WebSettings
         final WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
         final String ua = settings.getUserAgentString();
         // 设置UserAgent用于App身份识别
         settings.setUserAgentString(ua + "Latte");

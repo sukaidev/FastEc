@@ -1,6 +1,5 @@
 package com.sukaidev.latte_core.delegates.web;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -18,6 +17,8 @@ import com.sukaidev.latte_core.delegates.web.route.Router;
  * Created by sukaidev on 2019/05/05.
  */
 public class WebDelegateImpl extends WebDelegate implements IWebViewInitializer {
+
+    private IPageLoadListener mIPageLoadListener = null;
 
     public static WebDelegateImpl create(String url) {
         final Bundle args = new Bundle();
@@ -46,6 +47,10 @@ public class WebDelegateImpl extends WebDelegate implements IWebViewInitializer 
         }
     }
 
+    public void setPageLoadListener(IPageLoadListener listener) {
+        this.mIPageLoadListener = listener;
+    }
+
     @Override
     public WebView initWebView(WebView webView) {
         return new WebViewInitializer().createWebView(webView);
@@ -54,6 +59,7 @@ public class WebDelegateImpl extends WebDelegate implements IWebViewInitializer 
     @Override
     public WebViewClient initWebViewClient() {
         final WebViewClientImpl client = new WebViewClientImpl(this);
+        client.setPageLoadListener(mIPageLoadListener);
         return client;
     }
 

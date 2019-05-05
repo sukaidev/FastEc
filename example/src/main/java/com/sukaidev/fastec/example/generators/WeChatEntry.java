@@ -1,4 +1,4 @@
-package com.sukaidev.fastec.example.generator;
+package com.sukaidev.fastec.example.generators;
 
 import com.sukaidev.annotations.EntryGenerator;
 import com.sukaidev.latte_core.wechat.templates.WXEntryTemplate;

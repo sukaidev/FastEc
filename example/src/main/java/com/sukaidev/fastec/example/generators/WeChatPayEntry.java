@@ -1,4 +1,4 @@
-package com.sukaidev.fastec.example.generator;
+package com.sukaidev.fastec.example.generators;
 
 import com.sukaidev.annotations.PayEntryGenerator;
 import com.sukaidev.latte_core.wechat.templates.WXPayEntryTemplate;

@@ -1,17 +1,14 @@
 package com.sukaidev.fastec.example;
 
 import android.app.Application;
-import android.os.Debug;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
-import com.joanzapata.iconify.fonts.IoniconsModule;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.sukaidev.latte.ec.database.DatabaseManager;
 import com.sukaidev.latte.ec.icon.FontEcModule;
 import com.sukaidev.latte_core.app.Latte;
-import com.sukaidev.latte_core.net.interceptors.DebugInterceptor;
-
+import com.sukaidev.fastec.example.event.TestEvent;
 
 
 /**
@@ -30,6 +27,8 @@ public class ExampleApp extends Application {
 //                .withInterceptor(new DebugInterceptor("index",R.raw.test))
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
+                .withJavaScriptInterface("latte")
+                .withWebEvent("test",new TestEvent())
                 .configure();
         DatabaseManager.getInstance().init(this);
     }

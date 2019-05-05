@@ -1,7 +1,9 @@
-package com.sukaidev.latte_core.delegates.web.event;
+package com.sukaidev.fastec.example.event;
 
 import android.webkit.WebView;
 import android.widget.Toast;
+
+import com.sukaidev.latte_core.delegates.web.event.Event;
 
 /**
  * Created by sukaidev on 2019/05/05.

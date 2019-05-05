@@ -5,7 +5,6 @@ import android.webkit.JavascriptInterface;
 import com.alibaba.fastjson.JSON;
 import com.sukaidev.latte_core.delegates.web.event.Event;
 import com.sukaidev.latte_core.delegates.web.event.EventManager;
-import com.sukaidev.latte_core.delegates.web.event.TestEvent;
 import com.sukaidev.latte_core.util.log.LatteLogger;
 
 /**
@@ -26,8 +25,7 @@ final class LatteWebInterface {
     @JavascriptInterface
     public String event(String params) {
         final String action = JSON.parseObject(params).getString("action");
-//        final Event event = EventManager.getInstance().createEvent(action);
-        final TestEvent event = new TestEvent();
+        final Event event = EventManager.getInstance().createEvent(action);
         LatteLogger.d("WEB_EVENT",params);
         if (event != null) {
             event.setAction(action);

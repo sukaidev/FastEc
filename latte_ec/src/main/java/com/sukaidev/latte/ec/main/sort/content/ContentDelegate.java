@@ -2,7 +2,6 @@ package com.sukaidev.latte.ec.main.sort.content;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;

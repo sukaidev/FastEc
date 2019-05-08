@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#1111"
     android:orientation="vertical">
 
@@ -10,8 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@android:color/holo_orange_dark"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
         android:gravity="center">
-
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,7 +23,6 @@
                 android:id="@+id/tv_top_shop_cart_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
                 android:layout_marginStart="20dp"
                 android:gravity="center"
                 android:paddingTop="12dp"
@@ -44,8 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
                 android:gravity="center"
                 android:paddingTop="12dp"
                 android:text="@string/delete_select"
@@ -58,7 +58,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/iv_shop_cart"
+        android:id="@+id/rv_shop_cart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8" />

@@ -24,5 +24,5 @@
     <string name="item_shop_cart_title">商品标题</string>
     <string name="item_shop_cart_desc">商品描述</string>
     <string name="icon_item_minus">{fa-minus-square-o}</string>
-    <string name="icon_item_plus">{fa-olus-square-o}</string>
+    <string name="icon_item_plus">{fa-plus-square-o}</string>
 </resources>

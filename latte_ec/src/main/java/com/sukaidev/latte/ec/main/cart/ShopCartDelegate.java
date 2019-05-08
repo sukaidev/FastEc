@@ -1,11 +1,14 @@
 package com.sukaidev.latte.ec.main.cart;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewStub;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,18 +31,24 @@ import butterknife.OnClick;
 /**
  * Created by sukaidev on 2019/05/05.
  */
-public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
+public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, ICartItemListener {
 
     private ShopCartAdapter mAdapter = null;
     // 购物车的Item总数量
     private int mCurrentCount = 0;
     // 要删除的Item的总数量
     private int mTotalCount = 0;
+    private double mTotalPrice = 0.00;
+
 
     @BindView(R2.id.rv_shop_cart)
     RecyclerView mRecyclerView = null;
     @BindView(R2.id.icon_shop_cart_select_all)
     IconTextView mIconSelectAll = null;
+    @BindView(R2.id.stub_shop_cart_empty)
+    ViewStub mStubNoItem = null;
+    @BindView(R2.id.tv_shop_cart_total_price)
+    AppCompatTextView mTvTotalPrice = null;
 
     @OnClick(R2.id.icon_shop_cart_select_all)
     void onClickSelectAll() {
@@ -80,7 +89,6 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
             } else {
                 removePosition = entityPosition;
             }
-            LatteLogger.d("removePosition : ", removePosition);
             if (removePosition <= mAdapter.getItemCount()) {
                 mAdapter.remove(removePosition);
                 mCurrentCount = mAdapter.getItemCount();
@@ -93,12 +101,33 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
         for (MultipleItemEntity entity : data) {
             entity.setField(ShopCartItemFields.POSITION, i++);
         }
+        checkItemCount();
     }
 
     @OnClick(R2.id.tv_top_shop_cart_clear)
     void onClickClear() {
         mAdapter.getData().clear();
         mAdapter.notifyDataSetChanged();
+        checkItemCount();
+    }
+
+    private void checkItemCount() {
+        final int count = mAdapter.getItemCount();
+        if (count == 0) {
+            if (mRecyclerView.getVisibility() == View.GONE) {
+                final View stubView = mStubNoItem.inflate();
+                final AppCompatTextView tvToPurchase = stubView.findViewById(R.id.tv_stub_to_purchase);
+                tvToPurchase.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getContext(), "去购物吧！", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                mRecyclerView.setVisibility(View.GONE);
+            }
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -122,14 +151,26 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess {
                 .get();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(String response) {
         final ArrayList<MultipleItemEntity> data = new ShopCartDataConverter()
                 .setJsonData(response)
                 .convert();
         mAdapter = new ShopCartAdapter(data);
+        mAdapter.setCartItemListener(this);
         final LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
+        mTotalPrice = mAdapter.getTotalPrice();
+        mTvTotalPrice.setText("￥" + mTotalPrice);
+        checkItemCount();
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onItemClick(double itemTotalPrice) {
+        final double price = mAdapter.getTotalPrice();
+        mTvTotalPrice.setText("￥" + price);
     }
 }

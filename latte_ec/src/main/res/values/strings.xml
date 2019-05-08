@@ -25,7 +25,7 @@
     <string name="item_shop_cart_desc">商品描述</string>
     <string name="icon_item_minus">{fa-minus-square-o}</string>
     <string name="icon_item_plus">{fa-plus-square-o}</string>
-    <string name="go_shopping">去购物</string>
+    <string name="go_shopping">购物车空空如也</string>
     <string name="my_order">我的订单</string>
     <string name="all_order">全部订单</string>
     <string name="pending_payment">待付款</string>

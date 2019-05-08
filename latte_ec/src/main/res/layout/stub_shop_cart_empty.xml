@@ -5,7 +5,7 @@
     android:layout_weight="8">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_stub_to_shopping"
+        android:id="@+id/tv_stub_to_purchase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

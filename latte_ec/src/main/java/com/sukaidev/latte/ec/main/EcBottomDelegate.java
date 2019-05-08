@@ -5,6 +5,7 @@ import android.graphics.Color;
 import com.sukaidev.latte.ec.main.cart.ShopCartDelegate;
 import com.sukaidev.latte.ec.main.discover.DiscoverDelegate;
 import com.sukaidev.latte.ec.main.index.IndexDelegate;
+import com.sukaidev.latte.ec.main.personal.PersonalDelegate;
 import com.sukaidev.latte.ec.main.sort.SortDelegate;
 import com.sukaidev.latte_core.delegates.bottom.BaseBottomDelegate;
 import com.sukaidev.latte_core.delegates.bottom.BottomItemDelegate;
@@ -25,7 +26,7 @@ public class EcBottomDelegate extends BaseBottomDelegate {
         items.put(new BottomTabBean("{fa-sort}", "分类"), new SortDelegate());
         items.put(new BottomTabBean("{fa-compass}", "发现"), new DiscoverDelegate());
         items.put(new BottomTabBean("{fa-shopping-cart}", "购物车"), new ShopCartDelegate());
-        items.put(new BottomTabBean("{fa-user}", "我的"), new IndexDelegate());
+        items.put(new BottomTabBean("{fa-user}", "我的"), new PersonalDelegate());
         return builder.addItem(items).build();
     }
 

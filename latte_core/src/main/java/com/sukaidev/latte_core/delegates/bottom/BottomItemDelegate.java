@@ -1,18 +1,29 @@
 package com.sukaidev.latte_core.delegates.bottom;
 
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Toast;
 
-import com.sukaidev.latte_core.R;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
 
 /**
  * Created by sukaidev on 2019/03/20.
  */
-public abstract class BottomItemDelegate extends LatteDelegate implements View.OnKeyListener {
+public abstract class BottomItemDelegate extends LatteDelegate {
 
-    private long mExitTime = 0;
+    private static final long WAIT_TIME = 2000L;
+    private long TOUCH_TIME = 0;
+
+    @Override
+    public boolean onBackPressedSupport() {
+        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+            _mActivity.finish();
+        } else {
+            TOUCH_TIME = System.currentTimeMillis();
+            Toast.makeText(getContext(), "双击退出", Toast.LENGTH_SHORT).show();
+        }
+        return true;
+    }
+
+    /*    private long mExitTime = 0;
     private static final int EXIT_TIME = 2000;
 
     @Override
@@ -41,5 +52,5 @@ public abstract class BottomItemDelegate extends LatteDelegate implements View.O
             return true;
         }
         return false;
-    }
+    }*/
 }

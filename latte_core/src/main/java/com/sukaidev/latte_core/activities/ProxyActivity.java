@@ -39,6 +39,7 @@ public abstract class ProxyActivity extends SupportActivity{
         }
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

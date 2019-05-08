@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\SHH\\.android\\debug.keystore')
+            storePassword 'su7hai2hong80207'
+            keyAlias = 'personal'
+            keyPassword 'qq923201817'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.sukaidev.fastec.example"

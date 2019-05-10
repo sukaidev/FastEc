@@ -13,6 +13,7 @@ import com.sukaidev.latte.ec.main.personal.list.ListAdapter;
 import com.sukaidev.latte.ec.main.personal.list.ListBean;
 import com.sukaidev.latte.ec.main.personal.list.ListItemType;
 import com.sukaidev.latte.ec.main.personal.order.OrderListDelegate;
+import com.sukaidev.latte.ec.main.personal.profile.UserProfileDelegate;
 import com.sukaidev.latte_core.delegates.bottom.BottomItemDelegate;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import butterknife.OnClick;
 
 /**
  * Created by sukaidev on 2019/05/08.
+ * 用户个人中心页面.
  */
 public class PersonalDelegate extends BottomItemDelegate {
 
@@ -36,6 +38,11 @@ public class PersonalDelegate extends BottomItemDelegate {
     void onClickAllOrder() {
         mArgs.putString(ORDER_TYPE, "all");
         startOrderListByType();
+    }
+
+    @OnClick(R2.id.img_user_avatar)
+    void onClickAvatar() {
+        getParentDelegate().getSupportDelegate().start(new UserProfileDelegate());
     }
 
     @Override
@@ -57,13 +64,13 @@ public class PersonalDelegate extends BottomItemDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
-        ListBean address = new ListBean.Builder()
+        final ListBean address = new ListBean.Builder()
                 .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(1)
                 .setText("收货地址")
                 .build();
 
-        ListBean system = new ListBean.Builder()
+        final ListBean system = new ListBean.Builder()
                 .setItemType(ListItemType.ITEM_NORMAL)
                 .setId(2)
                 .setText("系统设置")

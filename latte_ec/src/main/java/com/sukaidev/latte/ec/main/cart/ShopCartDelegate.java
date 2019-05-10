@@ -20,7 +20,6 @@ import com.sukaidev.latte_core.delegates.bottom.BottomItemDelegate;
 import com.sukaidev.latte_core.net.RestClient;
 import com.sukaidev.latte_core.net.callback.ISuccess;
 import com.sukaidev.latte_core.ui.recycler.MultipleItemEntity;
-import com.sukaidev.latte_core.util.log.LatteLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +150,6 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
                 .get();
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onSuccess(String response) {
         final ArrayList<MultipleItemEntity> data = new ShopCartDataConverter()
@@ -162,15 +160,18 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
         final LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
-        mTotalPrice = mAdapter.getTotalPrice();
-        mTvTotalPrice.setText("￥" + mTotalPrice);
+        checkTotalPrice();
         checkItemCount();
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onItemClick(double itemTotalPrice) {
-        final double price = mAdapter.getTotalPrice();
-        mTvTotalPrice.setText("￥" + price);
+        checkTotalPrice();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void checkTotalPrice() {
+        mTotalPrice = mAdapter.getTotalPrice();
+        mTvTotalPrice.setText("￥" + mTotalPrice);
     }
 }

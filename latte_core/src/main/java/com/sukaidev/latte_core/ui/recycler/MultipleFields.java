@@ -6,6 +6,7 @@ package com.sukaidev.latte_core.ui.recycler;
 public enum MultipleFields {
     ITEM_TYPE,
     TEXT,
+    TITLE,
     IMAGE_URL,
     BANNERS,
     SPAN_SIZE,

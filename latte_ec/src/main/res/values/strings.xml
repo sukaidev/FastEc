@@ -32,4 +32,5 @@
     <string name="pending_receipt">待收货</string>
     <string name="pending_comment">待评价</string>
     <string name="after_sale_service">售后</string>
+    <string name="order_list">订单列表</string>
 </resources>

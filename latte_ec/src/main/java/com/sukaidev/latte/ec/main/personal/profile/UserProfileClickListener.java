@@ -1,6 +1,7 @@
 package com.sukaidev.latte.ec.main.personal.profile;
 
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
@@ -11,7 +12,11 @@ import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.main.personal.list.ListBean;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
+import com.sukaidev.latte_core.ui.callback.CallbackManager;
+import com.sukaidev.latte_core.ui.callback.CallbackType;
+import com.sukaidev.latte_core.ui.callback.IGlobalCallback;
 import com.sukaidev.latte_core.ui.date.DateDialogUtil;
+import com.sukaidev.latte_core.util.log.LatteLogger;
 
 /**
  * Created by sukaidev on 2019/05/10.
@@ -28,7 +33,7 @@ public class UserProfileClickListener extends SimpleClickListener {
 
     private void getGenderDialog(DialogInterface.OnClickListener listener) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mDelegate.getContext());
-        builder.setSingleChoiceItems(mGenders,0,listener);
+        builder.setSingleChoiceItems(mGenders, 0, listener);
         builder.show();
     }
 
@@ -39,6 +44,14 @@ public class UserProfileClickListener extends SimpleClickListener {
         switch (id) {
             case 1:
                 // 开启照相机或选择图片
+                CallbackManager.getInstance().addCallback(CallbackType.ON_CROP, new IGlobalCallback<Uri>() {
+
+                    @Override
+                    public void executeCallback(Uri args) {
+                        LatteLogger.d("ON_CROP", args);
+                    }
+                });
+                mDelegate.startCameraWithCheck();
                 break;
             case 2:
                 final LatteDelegate nameDelegate = bean.getDelegate();

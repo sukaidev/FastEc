@@ -49,9 +49,9 @@ public class Configurator {
     }
 
     public final void configure() {
-        Utils.init(Latte.getApplicationContext());
         initIcons();
         LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY.name(), true);
+        Utils.init(Latte.getApplicationContext());
     }
 
     /**

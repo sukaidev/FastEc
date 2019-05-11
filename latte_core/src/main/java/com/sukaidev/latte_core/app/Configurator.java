@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 
+import com.blankj.utilcode.util.Utils;
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.sukaidev.latte_core.delegates.web.event.Event;
@@ -48,6 +49,7 @@ public class Configurator {
     }
 
     public final void configure() {
+        Utils.init(Latte.getApplicationContext());
         initIcons();
         LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY.name(), true);
     }

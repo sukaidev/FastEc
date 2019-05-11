@@ -31,7 +31,8 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by 傅令杰
+ * Created by sukaidev on 2019/01/10.
+ * 文件类型操作工具类.
  */
 public final class FileUtil {
 
@@ -343,6 +344,12 @@ public final class FileUtil {
         }
     }
 
+    /**
+     * 由uri路径转化为真实路径
+     * @param context
+     * @param uri
+     * @return
+     */
     public static String getRealFilePath(final Context context, final Uri uri) {
         if (null == uri) return null;
         final String scheme = uri.getScheme();

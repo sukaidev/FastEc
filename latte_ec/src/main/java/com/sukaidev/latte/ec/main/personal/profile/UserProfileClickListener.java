@@ -5,13 +5,18 @@ import android.net.Uri;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
+import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.main.personal.list.ListBean;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
+import com.sukaidev.latte_core.net.RestClient;
+import com.sukaidev.latte_core.net.callback.ISuccess;
 import com.sukaidev.latte_core.ui.callback.CallbackManager;
 import com.sukaidev.latte_core.ui.callback.CallbackType;
 import com.sukaidev.latte_core.ui.callback.IGlobalCallback;
@@ -47,8 +52,40 @@ public class UserProfileClickListener extends SimpleClickListener {
                 CallbackManager.getInstance().addCallback(CallbackType.ON_CROP, new IGlobalCallback<Uri>() {
 
                     @Override
-                    public void executeCallback(Uri args) {
-                        LatteLogger.d("ON_CROP", args);
+                    public void executeCallback(final Uri args) {
+                        // 将图片上传到服务器
+                        RestClient.builder()
+                                .url("")
+                                .file(args.getPath())
+                                .loader(mDelegate.getContext())
+                                .success(new ISuccess() {
+                                    @Override
+                                    public void onSuccess(String response) {
+                                        final AppCompatImageView avatar = view.findViewById(R.id.img_arrow_avatar);
+                                        Glide.with(mDelegate)
+                                                .load(args)
+                                                .into(avatar);
+
+                                        String path = JSON.parseObject(response).getJSONObject("avatar").getString("path");
+
+                                        // 通知服务器更新信息
+                                        RestClient.builder()
+                                                .url("user_profile.php")
+                                                .params("avatar",path)
+                                                .loader(mDelegate.getContext())
+                                                .success(new ISuccess() {
+                                                    @Override
+                                                    public void onSuccess(String response) {
+                                                        // 获取更新后的用户信息，然后更新本地数据库
+
+                                                    }
+                                                })
+                                                .build()
+                                                .post();
+                                    }
+                                })
+                                .build()
+                                .update();
                     }
                 });
                 mDelegate.startCameraWithCheck();

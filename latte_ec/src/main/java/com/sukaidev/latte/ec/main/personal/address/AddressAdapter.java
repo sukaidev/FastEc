@@ -5,6 +5,8 @@ import android.view.View;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.sukaidev.latte.ec.R;
+import com.sukaidev.latte_core.net.RestClient;
+import com.sukaidev.latte_core.net.callback.ISuccess;
 import com.sukaidev.latte_core.ui.recycler.MultipleFields;
 import com.sukaidev.latte_core.ui.recycler.MultipleItemEntity;
 import com.sukaidev.latte_core.ui.recycler.MultipleRecyclerAdapter;
@@ -23,7 +25,7 @@ public class AddressAdapter extends MultipleRecyclerAdapter {
     }
 
     @Override
-    protected void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
+    protected void convert(final MultipleViewHolder holder, MultipleItemEntity entity) {
         super.convert(holder, entity);
         switch (holder.getItemViewType()) {
             case AddressItemType.ITEM_ADDRESS:
@@ -45,7 +47,17 @@ public class AddressAdapter extends MultipleRecyclerAdapter {
                 deleteText.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        RestClient.builder()
+                                .url("address.php")
+                                .params("id", id)
+                                .success(new ISuccess() {
+                                    @Override
+                                    public void onSuccess(String response) {
+                                        remove(holder.getLayoutPosition());
+                                    }
+                                })
+                                .build()
+                                .post();
                     }
                 });
                 break;

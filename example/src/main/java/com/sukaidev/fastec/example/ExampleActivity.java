@@ -19,6 +19,7 @@ import com.sukaidev.latte_core.ui.launcher.OnLauncherFinishTag;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 
+import cn.jpush.android.api.JPushInterface;
 import qiu.niorgai.StatusBarCompat;
 
 
@@ -33,6 +34,18 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         }
         Latte.getConfigurator().withActivity(this);
         StatusBarCompat.translucentStatusBar(this, true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
     }
 
     @Override

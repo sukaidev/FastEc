@@ -10,6 +10,8 @@ import com.sukaidev.latte.ec.icon.FontEcModule;
 import com.sukaidev.latte_core.app.Latte;
 import com.sukaidev.fastec.example.event.TestEvent;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /**
  * Created by sukaidev on 2019/01/16.
@@ -31,5 +33,9 @@ public class ExampleApp extends Application {
                 .withWebEvent("test",new TestEvent())
                 .configure();
         DatabaseManager.getInstance().init(this);
+
+        // 极光推送
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 }

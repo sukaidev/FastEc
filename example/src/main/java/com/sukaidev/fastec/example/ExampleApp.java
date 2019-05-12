@@ -2,6 +2,8 @@ package com.sukaidev.fastec.example;
 
 import android.app.Application;
 
+import androidx.annotation.Nullable;
+
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -9,6 +11,9 @@ import com.sukaidev.latte.ec.database.DatabaseManager;
 import com.sukaidev.latte.ec.icon.FontEcModule;
 import com.sukaidev.latte_core.app.Latte;
 import com.sukaidev.fastec.example.event.TestEvent;
+import com.sukaidev.latte_core.ui.callback.CallbackManager;
+import com.sukaidev.latte_core.ui.callback.CallbackType;
+import com.sukaidev.latte_core.ui.callback.IGlobalCallback;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -30,12 +35,27 @@ public class ExampleApp extends Application {
                 .withWeChatAppId("")
                 .withWeChatAppSecret("")
                 .withJavaScriptInterface("latte")
-                .withWebEvent("test",new TestEvent())
+                .withWebEvent("test", new TestEvent())
                 .configure();
         DatabaseManager.getInstance().init(this);
 
         // 极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+
+        CallbackManager.getInstance()
+                .addCallback(CallbackType.TAG_OPEN_PUSH, args -> {
+                    if (JPushInterface.isPushStopped(Latte.getApplicationContext())) {
+                        // 开启极光推送
+                        JPushInterface.setDebugMode(true);
+                        JPushInterface.init(Latte.getApplicationContext());
+                    }
+                })
+                .addCallback(CallbackType.TAG_STOP_PUSH, args -> {
+                    if (!JPushInterface.isPushStopped(Latte.getApplicationContext())) {
+                        // 开启极光推送
+                        JPushInterface.stopPush(Latte.getApplicationContext());
+                    }
+                });
     }
 }

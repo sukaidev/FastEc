@@ -1,6 +1,6 @@
 package com.sukaidev.latte.ec.main.personal.list;
 
-import android.widget.ImageView;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -27,6 +27,7 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
         super(data);
         addItemType(ListItemType.ITEM_NORMAL, R.layout.arrow_item_layout);
         addItemType(ListItemType.ITEM_AVATAR, R.layout.arrow_item_avatar);
+        addItemType(ListItemType.ITEM_SWITCH, R.layout.arrow_switch_layout);
     }
 
     @Override
@@ -44,6 +45,12 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
                         .load(imgUrl)
                         .apply(OPTIONS)
                         .into(imageView);
+                break;
+            case ListItemType.ITEM_SWITCH:
+                holder.setText(R.id.tv_arrow_switch_text,item.getText());
+                final SwitchCompat switchCompat = holder.getView(R.id.list_item_switch);
+                switchCompat.setChecked(true);
+                switchCompat.setOnCheckedChangeListener(item.getOnCheckedChangeListener());
                 break;
             default:
                 break;

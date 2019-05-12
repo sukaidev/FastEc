@@ -33,4 +33,6 @@
     <string name="pending_comment">待评价</string>
     <string name="after_sale_service">售后</string>
     <string name="order_list">订单列表</string>
+    <string name="settings">设置</string>
+    <string name="about">关于</string>
 </resources>

@@ -10,12 +10,12 @@
     android:paddingBottom="10dp">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/photodialog_btn_take"
+        android:id="@+id/dialog_image_clicked_btn_delete"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/btn_border_take_photo"
         android:gravity="center"
-        android:text="拍照"
+        android:text="删除"
         android:textColor="#323232" />
 
     <View
@@ -27,13 +27,12 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/photodialog_btn_native"
+        android:id="@+id/dialog_image_clicked_btn_undetermined"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="center"
         android:background="@drawable/btn_border_native_photo"
         android:gravity="center"
-        android:text="本地"
+        android:text="待定"
         android:textColor="#323232" />
 
     <View
@@ -44,10 +43,9 @@
         android:gravity="center" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/photodialog_btn_cancel"
+        android:id="@+id/dialog_image_clicked_btn_cancel"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="center"
         android:background="@drawable/btn_border"
         android:gravity="center"
         android:text="取消"

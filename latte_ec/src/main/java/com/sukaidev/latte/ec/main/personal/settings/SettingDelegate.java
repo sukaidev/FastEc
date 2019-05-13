@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.R2;
-import com.sukaidev.latte.ec.main.personal.PersonalClickListener;
 import com.sukaidev.latte.ec.main.personal.address.AddressDelegate;
 import com.sukaidev.latte.ec.main.personal.list.ListAdapter;
 import com.sukaidev.latte.ec.main.personal.list.ListBean;

@@ -28,26 +28,27 @@ import java.util.List;
 
 /**
  * Created by sukaidev on 2019/05/12.
+ * 仿微信自动多图选择控件.
  */
 public class AutoPhotoLayout extends LinearLayoutCompat {
 
     private int mCurrentNum = 0;
-    private int mMaxNum = 0;
-    private int mMaxLineNum = 0;
+    private final int mMaxNum;
+    private final int mMaxLineNum;
     private IconTextView mIconAdd = null;
     private LayoutParams mParams = null;
     // 要删除的图片ID
     private int mDeleteId = 0;
     private AppCompatImageView mTargetImageView = null;
-    private int mImageMargin = 0;
+    private final int mImageMargin;
     private LatteDelegate mDelegate = null;
     private List<View> mLineViews = null;
     private AlertDialog mTargetDialog = null;
     private static final String ICON_TEXT = "{fa-plus}";
-    private float mIconSize = 0;
+    private final float mIconSize;
 
-    private static final List<List<View>> ALL_VIEWS = new ArrayList<>();
-    private static final List<Integer> LINE_HEIGHTS = new ArrayList<>();
+    private final List<List<View>> ALL_VIEWS = new ArrayList<>();
+    private final List<Integer> LINE_HEIGHTS = new ArrayList<>();
 
     // 防止多次的测量和布局过程
     private boolean mIsOnceInitOnMeasure = false;
@@ -150,8 +151,6 @@ public class AutoPhotoLayout extends LinearLayoutCompat {
                             // 当数目达到上限时隐藏添加按钮，不足时显示
                             if (mCurrentNum < mMaxNum) {
                                 mIconAdd.setVisibility(VISIBLE);
-                            } else {
-                                mIconAdd.setVisibility(GONE);
                             }
                             mTargetDialog.cancel();
                         }
@@ -203,17 +202,19 @@ public class AutoPhotoLayout extends LinearLayoutCompat {
             // 得到LayoutParams
             final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
             // 子View占据的宽度
-            int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
-            int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
+            final int childWidth = child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin;
+            // 子View占据的高度
+            final int childHeight = child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin;
             // 换行
-            if (lineWidth + childWidth >= sizeWidth - getPaddingLeft() - getPaddingRight()) {
+            if (lineWidth + childWidth > sizeWidth - getPaddingLeft() - getPaddingRight()) {
                 // 对比得到最大宽度
                 width = Math.max(width, lineWidth);
                 // 重置lineWidth
                 lineWidth = childWidth;
                 height += lineHeight;
                 lineHeight = childHeight;
-            } else {// 未换行，叠加行宽
+            } else {
+                // 未换行，叠加行宽
                 lineWidth += childWidth;
                 // 得到当前最大的高度
                 lineHeight = Math.max(lineHeight, childHeight);
@@ -228,7 +229,8 @@ public class AutoPhotoLayout extends LinearLayoutCompat {
 
         setMeasuredDimension(
                 modeWidth == MeasureSpec.EXACTLY ? sizeWidth : width + getPaddingLeft() + getPaddingRight(),
-                modeHeight == MeasureSpec.EXACTLY ? sizeHeight : height + getPaddingTop() + getPaddingBottom());
+                modeHeight == MeasureSpec.EXACTLY ? sizeHeight : height + getPaddingTop() + getPaddingBottom()
+        );
 
         // 设置一行所有图片的宽高
         final int imageSideLen = sizeWidth / mMaxLineNum;
@@ -296,8 +298,8 @@ public class AutoPhotoLayout extends LinearLayoutCompat {
                 final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
                 // 设置子View边距
                 final int lc = left + lp.leftMargin;
-                final int tc = top + lp.rightMargin;
-                final int rc = child.getMeasuredWidth() - mImageMargin;
+                final int tc = top + lp.topMargin;
+                final int rc = lc + child.getMeasuredWidth() - mImageMargin;
                 final int bc = tc + child.getMeasuredHeight();
                 // 为子View进行布局
                 child.layout(lc, tc, rc, bc);

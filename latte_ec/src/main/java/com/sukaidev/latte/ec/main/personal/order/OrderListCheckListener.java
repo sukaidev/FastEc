@@ -12,7 +12,7 @@ public class OrderListCheckListener extends SimpleClickListener {
 
     private final OrderListDelegate mDelegate;
 
-    public OrderListCheckListener(OrderListDelegate delegate) {
+    OrderListCheckListener(OrderListDelegate delegate) {
         this.mDelegate = delegate;
     }
 

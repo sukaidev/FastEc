@@ -8,6 +8,7 @@ import com.joanzapata.iconify.widget.IconTextView;
 import com.sukaidev.latte.ec.R;
 import com.sukaidev.latte.ec.R2;
 import com.sukaidev.latte.ec.main.EcBottomDelegate;
+import com.sukaidev.latte.ec.main.index.search.SearchDelegate;
 import com.sukaidev.latte_core.delegates.bottom.BottomItemDelegate;
 import com.sukaidev.latte_core.net.RestClient;
 import com.sukaidev.latte_core.net.callback.ISuccess;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
 /**
  * Created by sukaidev on 2019/03/21.
  */
-public class IndexDelegate extends BottomItemDelegate {
+public class IndexDelegate extends BottomItemDelegate implements View.OnClickListener {
 
     @BindView(R2.id.rv_index)
     RecyclerView mRecyclerView = null;
@@ -96,5 +97,15 @@ public class IndexDelegate extends BottomItemDelegate {
                         Toast.makeText(getContext(), args, Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        // 添加SearchView点击事件
+        mSearchView.setFocusable(false);
+        mSearchView.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        getParentDelegate().getSupportDelegate().start(new SearchDelegate());
     }
 }

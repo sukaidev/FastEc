@@ -80,4 +80,6 @@ public final class LattePreference {
         return getAppPreference().getString(key, "");
     }
 
+
+
 }

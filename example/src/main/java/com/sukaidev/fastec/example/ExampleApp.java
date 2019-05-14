@@ -5,8 +5,10 @@ import android.app.Application;
 import androidx.annotation.Nullable;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.mob.MobSDK;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.sukaidev.fastec.example.event.ShareEvent;
 import com.sukaidev.latte.ec.database.DatabaseManager;
 import com.sukaidev.latte.ec.icon.FontEcModule;
 import com.sukaidev.latte_core.app.Latte;
@@ -36,12 +38,16 @@ public class ExampleApp extends Application {
                 .withWeChatAppSecret("")
                 .withJavaScriptInterface("latte")
                 .withWebEvent("test", new TestEvent())
+                .withWebEvent("share", new ShareEvent())
                 .configure();
         DatabaseManager.getInstance().init(this);
 
         // 极光推送
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+
+        // ShareSDK
+        MobSDK.init(this);
 
         CallbackManager.getInstance()
                 .addCallback(CallbackType.TAG_OPEN_PUSH, args -> {

@@ -134,19 +134,4 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
         }
     }
 
-    @Override
-    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
-        super.onFragmentResult(requestCode, resultCode, data);
-        if (requestCode == RequestCodes.SCAN) {
-            if (data != null) {
-                final String qrCode = data.getString("SCAN_RESULT");
-                @SuppressWarnings("unchecked") final IGlobalCallback<String> callback = CallbackManager
-                        .getInstance()
-                        .getCallback(CallbackType.ON_SCAN);
-                if (callback != null) {
-                    callback.executeCallback(qrCode);
-                }
-            }
-        }
-    }
 }

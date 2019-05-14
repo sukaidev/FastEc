@@ -6,6 +6,9 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.sukaidev.latte_core.delegates.LatteDelegate;
+import com.sukaidev.latte_core.ui.callback.CallbackManager;
+import com.sukaidev.latte_core.ui.callback.CallbackType;
+import com.sukaidev.latte_core.ui.callback.IGlobalCallback;
 import com.sukaidev.latte_core.ui.camera.RequestCodes;
 
 import me.dm7.barcodescanner.zbar.Result;
@@ -56,11 +59,15 @@ public class ScannerDelegate extends LatteDelegate implements ZBarScannerView.Re
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void handleResult(Result result) {
-        final Bundle bundle = new Bundle();
-        bundle.putString("SCAN_RESULT", result.getContents());
-        setFragmentResult(RequestCodes.SCAN, bundle);
+        final IGlobalCallback<String> callback = CallbackManager
+                .getInstance()
+                .getCallback(CallbackType.ON_SCAN);
+        if (callback != null) {
+            callback.executeCallback(result.getContents());
+        }
         // 出栈
         getSupportDelegate().pop();
     }

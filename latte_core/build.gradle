@@ -90,4 +90,6 @@ dependencies {
     annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.3.1"
     // 工具包
     api 'com.blankj:utilcodex:1.23.7'
+    // 二维码
+    api 'me.dm7.barcodescanner:zbar:1.9.13'
 }

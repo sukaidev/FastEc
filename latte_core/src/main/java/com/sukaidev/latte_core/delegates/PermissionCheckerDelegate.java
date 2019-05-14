@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.sukaidev.latte_core.ui.callback.IGlobalCallback;
 import com.sukaidev.latte_core.ui.camera.CameraImageBean;
 import com.sukaidev.latte_core.ui.camera.LatteCamera;
 import com.sukaidev.latte_core.ui.camera.RequestCodes;
+import com.sukaidev.latte_core.ui.scanner.ScannerDelegate;
 import com.yalantis.ucrop.UCrop;
 
 import permissions.dispatcher.NeedsPermission;
@@ -40,6 +42,16 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
     // 真正调用方法
     public void startCameraWithCheck() {
         PermissionCheckerDelegatePermissionsDispatcher.startCameraWithPermissionCheck(this);
+    }
+
+    // 非直接调用方法
+    @NeedsPermission(Manifest.permission.CAMERA)
+    void startScan(LatteDelegate delegate) {
+        delegate.getSupportDelegate().startForResult(new ScannerDelegate(), RequestCodes.SCAN);
+    }
+
+    public void startScanWithCheck(LatteDelegate delegate) {
+        PermissionCheckerDelegatePermissionsDispatcher.startScanWithPermissionCheck(this, delegate);
     }
 
     @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
@@ -113,11 +125,27 @@ public abstract class PermissionCheckerDelegate extends BaseDelegate {
                         callback.executeCallback(cropUri);
                     }
                     break;
-                case RequestCodes.CROP_ERRO:
+                case RequestCodes.Crop_ERROR:
                     Toast.makeText(getContext(), "剪裁图片出错！", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
+            }
+        }
+    }
+
+    @Override
+    public void onFragmentResult(int requestCode, int resultCode, Bundle data) {
+        super.onFragmentResult(requestCode, resultCode, data);
+        if (requestCode == RequestCodes.SCAN) {
+            if (data != null) {
+                final String qrCode = data.getString("SCAN_RESULT");
+                @SuppressWarnings("unchecked") final IGlobalCallback<String> callback = CallbackManager
+                        .getInstance()
+                        .getCallback(CallbackType.ON_SCAN);
+                if (callback != null) {
+                    callback.executeCallback(qrCode);
+                }
             }
         }
     }

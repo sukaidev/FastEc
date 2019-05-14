@@ -11,10 +11,14 @@ import com.sukaidev.latte.ec.main.EcBottomDelegate;
 import com.sukaidev.latte_core.delegates.bottom.BottomItemDelegate;
 import com.sukaidev.latte_core.net.RestClient;
 import com.sukaidev.latte_core.net.callback.ISuccess;
+import com.sukaidev.latte_core.ui.callback.CallbackManager;
+import com.sukaidev.latte_core.ui.callback.CallbackType;
+import com.sukaidev.latte_core.ui.callback.IGlobalCallback;
 import com.sukaidev.latte_core.ui.recycler.BaseDecoration;
 import com.sukaidev.latte_core.ui.recycler.MultipleFields;
 import com.sukaidev.latte_core.ui.recycler.MultipleItemEntity;
 import com.sukaidev.latte_core.ui.refresh.RefreshHandler;
+import com.sukaidev.latte_core.ui.scanner.ScannerDelegate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -27,6 +31,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by sukaidev on 2019/03/21.
@@ -45,6 +50,11 @@ public class IndexDelegate extends BottomItemDelegate {
     AppCompatEditText mSearchView = null;
 
     private RefreshHandler mRefreshHandler = null;
+
+    @OnClick(R2.id.icon_index_scan)
+    void onClickScanQrCode() {
+        startScanWithCheck(getParentDelegate());
+    }
 
     private void initRefreshLayout() {
         mRefreshLayout.setColorSchemeResources(
@@ -79,19 +89,12 @@ public class IndexDelegate extends BottomItemDelegate {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mRefreshHandler = RefreshHandler.create(mRefreshLayout, mRecyclerView, new IndexDataConverter());
-/*        RestClient.builder()
-                .url("index.php")
-                .success(new ISuccess() {
+        CallbackManager.getInstance()
+                .addCallback(CallbackType.ON_SCAN, new IGlobalCallback<String>() {
                     @Override
-                    public void onSuccess(String response) {
-                        final IndexDataConverter converter = new IndexDataConverter();
-                        converter.setJsonData(response);
-                        final ArrayList<MultipleItemEntity> list = converter.convert();
-                        final String image = list.get(1).getField(MultipleFields.IMAGE_URL);
-                        Toast.makeText(getContext(), image, Toast.LENGTH_SHORT).show();
+                    public void executeCallback(@Nullable String args) {
+                        Toast.makeText(getContext(), args, Toast.LENGTH_SHORT).show();
                     }
-                })
-                .build()
-                .get();*/
+                });
     }
 }

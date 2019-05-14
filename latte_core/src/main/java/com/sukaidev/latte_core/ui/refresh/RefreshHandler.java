@@ -8,6 +8,7 @@ import com.sukaidev.latte_core.net.RestClient;
 import com.sukaidev.latte_core.net.callback.ISuccess;
 import com.sukaidev.latte_core.ui.recycler.DataConverter;
 import com.sukaidev.latte_core.ui.recycler.MultipleRecyclerAdapter;
+import com.sukaidev.latte_core.util.log.LatteLogger;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,9 +25,9 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener, Bas
     private final DataConverter CONVERTER;
 
     private RefreshHandler(SwipeRefreshLayout swipeRefreshLayout,
-                          RecyclerView recyclerView,
-                          DataConverter converter,
-                          PagingBean pagingBean) {
+                           RecyclerView recyclerView,
+                           DataConverter converter,
+                           PagingBean pagingBean) {
         this.REFRESH_LAYOUT = swipeRefreshLayout;
         this.RECYCLERVIEW = recyclerView;
         this.CONVERTER = converter;
@@ -37,7 +38,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener, Bas
     public static RefreshHandler create(SwipeRefreshLayout swipeRefreshLayout,
                                         RecyclerView recyclerView,
                                         DataConverter converter) {
-        return new RefreshHandler(swipeRefreshLayout,recyclerView,converter,new PagingBean());
+        return new RefreshHandler(swipeRefreshLayout, recyclerView, converter, new PagingBean());
     }
 
     public void firstPage(String url) {
@@ -52,7 +53,7 @@ public class RefreshHandler implements SwipeRefreshLayout.OnRefreshListener, Bas
                                 .setPageSize(object.getInteger("page_size"));
                         // 设置Adapter
                         mAdapter = MultipleRecyclerAdapter.create(CONVERTER.setJsonData(response));
-                        mAdapter.setOnLoadMoreListener(RefreshHandler.this,RECYCLERVIEW);
+                        mAdapter.setOnLoadMoreListener(RefreshHandler.this, RECYCLERVIEW);
                         RECYCLERVIEW.setAdapter(mAdapter);
                         BEAN.addIndex();
                     }

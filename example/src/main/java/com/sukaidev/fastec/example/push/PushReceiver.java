@@ -30,8 +30,6 @@ public class PushReceiver extends BroadcastReceiver {
             json.put(key, val);
         }
 
-        LatteLogger.json("PushReceiver", json.toJSONString());
-
         final String pushAction = intent.getAction();
         if (pushAction.equals(JPushInterface.ACTION_NOTIFICATION_RECEIVED)) {
             // 处理接收到信息

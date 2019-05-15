@@ -1,14 +1,13 @@
 package com.sukaidev.latte_core.delegates;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.sukaidev.latte_core.ui.callback.CallbackManager;
 import com.sukaidev.latte_core.ui.callback.CallbackType;

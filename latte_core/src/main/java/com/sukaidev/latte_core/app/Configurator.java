@@ -1,9 +1,9 @@
 package com.sukaidev.latte_core.app;
 
-import android.app.Activity;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.Utils;
 import com.joanzapata.iconify.IconFontDescriptor;
@@ -116,7 +116,7 @@ public class Configurator {
         return this;
     }
 
-    public final Configurator withActivity(Activity activity) {
+    public final Configurator withActivity(AppCompatActivity activity) {
         LATTE_CONFIGS.put(ConfigKeys.ACTIVITY.name(), activity);
         return this;
     }

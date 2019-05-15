@@ -1,6 +1,6 @@
 package com.sukaidev.latte_core.wechat;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.sukaidev.latte_core.app.ConfigKeys;
 import com.sukaidev.latte_core.app.Latte;
@@ -21,7 +21,7 @@ public class LatteWeChat {
 
 
     private LatteWeChat() {
-        final Activity activity = (Activity) Latte.getConfiguration().get(ConfigKeys.ACTIVITY.name());
+        final AppCompatActivity activity = (AppCompatActivity) Latte.getConfiguration().get(ConfigKeys.ACTIVITY.name());
         WXAPI = WXAPIFactory.createWXAPI(activity, APP_ID, true);
         WXAPI.registerApp(APP_ID);
     }

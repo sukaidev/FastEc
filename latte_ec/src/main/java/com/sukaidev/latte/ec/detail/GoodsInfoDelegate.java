@@ -59,10 +59,10 @@ public class GoodsInfoDelegate extends LatteDelegate {
 
     }
 
-    static GoodsDetailDelegate create(@NonNull String goodsId) {
+    static GoodsInfoDelegate create(@NonNull String goodsData) {
         final Bundle args = new Bundle();
-        args.putString(ARG_GOODS_DATA, goodsId);
-        final GoodsDetailDelegate detailDelegate = new GoodsDetailDelegate();
+        args.putString(ARG_GOODS_DATA, goodsData);
+        final GoodsInfoDelegate detailDelegate = new GoodsInfoDelegate();
         detailDelegate.setArguments(args);
         return detailDelegate;
     }

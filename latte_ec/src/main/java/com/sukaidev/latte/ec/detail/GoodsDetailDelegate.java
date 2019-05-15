@@ -1,5 +1,6 @@
 package com.sukaidev.latte.ec.detail;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.TextViewCompat;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.ToxicBakery.viewpager.transforms.DefaultTransformer;
@@ -105,8 +107,20 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
         mCollapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(getContext(), R.color.app_main));
         mAppBar.addOnOffsetChangedListener(this);
         initData();
+        initTabLayout();
     }
 
+    private void initTabLayout() {
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.app_main));
+        mTabLayout.setTabTextColors(ColorStateList.valueOf(Color.BLACK));
+        mTabLayout.setBackgroundColor(Color.WHITE);
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    /**
+     * 得到商品信息，初始化轮播图与标题文字.
+     */
     private void initData() {
         RestClient.builder()
                 .url("goods_detail_data_1.php")
@@ -117,15 +131,21 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
                         final JSONObject data = JSONObject.parseObject(response).getJSONObject("data");
                         initBanner(data);
                         initGoodsInfo(data);
+                        initPager(data);
                     }
                 })
                 .build()
                 .get();
     }
 
+    private void initPager(JSONObject data) {
+        final PagerAdapter adapter = new TabPagerAdapter(getFragmentManager(), data);
+        mViewPager.setAdapter(adapter);
+    }
+
     private void initGoodsInfo(JSONObject data) {
         final String goodsData = data.toJSONString();
-//        getSupportDelegate().loadRootFragment(R.id.frame_goods_info, GoodsInfoDelegate.create(goodsData));
+        getSupportDelegate().loadRootFragment(R.id.frame_goods_info, GoodsInfoDelegate.create(goodsData));
     }
 
     private void initBanner(JSONObject data) {
@@ -142,6 +162,12 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
                 .setPageTransformer(new DefaultTransformer()) // 设置滑动动画
                 .startTurning(3000) // 设置滑动间隙
                 .setCanLoop(true); // 设置循环
+    }
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+
     }
 
     @Override

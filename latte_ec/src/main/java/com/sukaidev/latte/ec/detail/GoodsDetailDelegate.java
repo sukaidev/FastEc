@@ -1,5 +1,6 @@
 package com.sukaidev.latte.ec.detail;
 
+import android.animation.Animator;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,6 +21,10 @@ import com.ToxicBakery.viewpager.transforms.DefaultTransformer;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.tabs.TabLayout;
@@ -29,6 +34,8 @@ import com.sukaidev.latte.ec.R2;
 import com.sukaidev.latte_core.delegates.LatteDelegate;
 import com.sukaidev.latte_core.net.RestClient;
 import com.sukaidev.latte_core.net.callback.ISuccess;
+import com.sukaidev.latte_core.ui.animation.BezierAnimation;
+import com.sukaidev.latte_core.ui.animation.BezierUtil;
 import com.sukaidev.latte_core.ui.bannner.HolderCreator;
 import com.sukaidev.latte_core.util.log.LatteLogger;
 import com.sukaidev.latte_core.widget.CircleTextView;
@@ -37,17 +44,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * Created by sukaidev on 2019/05/04.
  */
-public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.OnOffsetChangedListener {
+public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.OnOffsetChangedListener, BezierUtil.AnimationListener {
 
     private static final String ARG_GOODS_ID = "ARG_GOODS_ID";
 
     private int mGoodsId = 0;
+
+    private String mGoodsThumbUrl = null;
+    private int mShopCount = 0;
 
     @BindView(R2.id.goods_detail_toolbar)
     Toolbar mToolbar = null;
@@ -76,6 +88,30 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
     RelativeLayout mRlAddShopCart = null;
     @BindView(R2.id.icon_shop_cart)
     IconTextView mIconShopCart = null;
+
+    private static final RequestOptions OPTIONS = new RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .centerCrop()
+            .dontAnimate()
+            .override(100, 100);
+
+    @OnClick(R2.id.rl_add_shop_cart)
+    void onClickAddShopCart() {
+        final CircleImageView animImg = new CircleImageView(getContext());
+        Glide.with(this)
+                .load(mGoodsThumbUrl)
+                .apply(OPTIONS)
+                .into(animImg);
+
+        BezierAnimation.addCart(this, mRlAddShopCart, mIconShopCart, animImg, this);
+    }
+
+    private void setShopCartCount(JSONObject data) {
+        mGoodsThumbUrl = data.getString("thumb");
+        if (mShopCount == 0) {
+            mTvAmount.setVisibility(View.GONE);
+        }
+    }
 
     public static GoodsDetailDelegate create(@NonNull int goodsId) {
         final Bundle args = new Bundle();
@@ -106,6 +142,7 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
     public void onBindView(@Nullable Bundle savedInstanceState, View rootView) {
         mCollapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(getContext(), R.color.app_main));
         mAppBar.addOnOffsetChangedListener(this);
+        mTvAmount.setCircleBackground(Color.RED);
         initData();
         initTabLayout();
     }
@@ -132,6 +169,7 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
                         initBanner(data);
                         initGoodsInfo(data);
                         initPager(data);
+                        setShopCartCount(data);
                     }
                 })
                 .build()
@@ -165,12 +203,6 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
     }
 
     @Override
-    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
-        super.onLazyInitView(savedInstanceState);
-
-    }
-
-    @Override
     public FragmentAnimator onCreateFragmentAnimator() {
         return new DefaultHorizontalAnimator();
     }
@@ -180,4 +212,31 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
 
     }
 
+    @Override
+    public void onAnimationEnd() {
+        YoYo.with(new ScaleUpAnimation())
+                .duration(500)
+                .playOn(mIconShopCart);
+        mShopCount++;
+        mTvAmount.setVisibility(View.VISIBLE);
+        mTvAmount.setText(String.valueOf(mShopCount));
+        // 向服务器更新数据
+        RestClient.builder()
+                .url("")
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(String response) {
+//                        mTvAmount.setVisibility(View.VISIBLE);
+//                        mTvAmount.setText(String.valueOf(mShopCount));
+                    }
+                })
+                .params("count", mShopCount)
+                .build()
+                .post();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

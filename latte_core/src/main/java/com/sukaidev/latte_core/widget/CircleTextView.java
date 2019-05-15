@@ -39,7 +39,7 @@ public class CircleTextView extends AppCompatTextView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         final int width = getMeasuredWidth();
-        final int height = getMeasuredHeight();
+        final int height = getMaxHeight();
         final int max = Math.max(width, height);
         setMeasuredDimension(max, max);
     }
@@ -47,7 +47,7 @@ public class CircleTextView extends AppCompatTextView {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.setDrawFilter(FILTER);
-        canvas.drawCircle((float) getWidth() / 2, (float) getHeight() / 2, Math.max(getWidth(), getHeight()), PAINT);
+        canvas.drawCircle((float) getWidth() / 2, (float) getHeight() / 2, (float) Math.max(getWidth(), getHeight()) / 2, PAINT);
         super.onDraw(canvas);
     }
 }

@@ -32,7 +32,9 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         if (actionBar != null) {
             actionBar.hide();
         }
+        // 将该Activity的实力添加到配置中
         Latte.getConfigurator().withActivity(this);
+        // 初始化沉浸式状态栏
         StatusBarCompat.translucentStatusBar(this, true);
     }
 
@@ -48,9 +50,13 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         JPushInterface.onResume(this);
     }
 
+    /**
+     * 设置根Fragment
+     * @return 根Fragment实例
+     */
     @Override
     public LatteDelegate setRootDelegate() {
-        return new EcBottomDelegate();
+        return new LauncherDelegate();
     }
 
     @Override

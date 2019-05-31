@@ -39,12 +39,6 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
 
     protected ShopCartAdapter(List<MultipleItemEntity> data) {
         super(data);
-        for (MultipleItemEntity entity : data) {
-            final double price = entity.getField(ShopCartItemFields.PRICE);
-            final int count = entity.getField(ShopCartItemFields.COUNT);
-            final double total = price * count;
-            mTotalPrice += total;
-        }
         // 添加购物车Item布局
         addItemType(ShopCartItemType.SHOP_CART_ITEM, R.layout.item_shop_cart);
     }
@@ -58,6 +52,15 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
     }
 
     public double getTotalPrice() {
+        mTotalPrice = 0.00;
+        for (MultipleItemEntity entity : mData) {
+            if (entity.getField(ShopCartItemFields.IS_SELECTED)) {
+                final double price = entity.getField(ShopCartItemFields.PRICE);
+                final int count = entity.getField(ShopCartItemFields.COUNT);
+                final double total = price * count;
+                mTotalPrice += total;
+            }
+        }
         return this.mTotalPrice;
     }
 
@@ -113,9 +116,22 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                         if (currentSelected) {
                             iconIsSelected.setTextColor(Color.GRAY);
                             entity.setField(ShopCartItemFields.IS_SELECTED, false);
+                            if (mCartItemListener != null) {
+                                int countNum = Integer.parseInt(tvCount.getText().toString());
+                                final double itemTotal = countNum * price;
+//                                mTotalPrice -= itemTotal;
+                                mCartItemListener.onItemClick(itemTotal);
+
+                            }
                         } else {
                             iconIsSelected.setTextColor(ContextCompat.getColor(Latte.getApplicationContext(), R.color.app_main));
                             entity.setField(ShopCartItemFields.IS_SELECTED, true);
+                            if (mCartItemListener != null) {
+                                int countNum = Integer.parseInt(tvCount.getText().toString());
+                                final double itemTotal = countNum * price;
+//                                mTotalPrice += itemTotal;
+                                mCartItemListener.onItemClick(itemTotal);
+                            }
                         }
                     }
                 });
@@ -132,9 +148,9 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                                         public void onSuccess(String response) {
                                             int countNum = Integer.parseInt(tvCount.getText().toString());
                                             tvCount.setText(String.valueOf(--countNum));
-//                                            entity.setField(ShopCartItemFields.COUNT, countNum);
-                                            if (mCartItemListener != null) {
-                                                mTotalPrice -= price;
+                                            entity.setField(ShopCartItemFields.COUNT, countNum);
+                                            if (mCartItemListener != null && isSelected) {
+//                                                mTotalPrice -= price;
                                                 final double itemTotal = countNum * price;
                                                 mCartItemListener.onItemClick(itemTotal);
                                             }
@@ -157,9 +173,9 @@ public class ShopCartAdapter extends MultipleRecyclerAdapter {
                                     public void onSuccess(String response) {
                                         int countNum = Integer.parseInt(tvCount.getText().toString());
                                         tvCount.setText(String.valueOf(++countNum));
-//                                        entity.setField(ShopCartItemFields.COUNT, countNum);
-                                        if (mCartItemListener != null) {
-                                            mTotalPrice += price;
+                                        entity.setField(ShopCartItemFields.COUNT, countNum);
+                                        if (mCartItemListener != null && isSelected) {
+//                                            mTotalPrice += price;
                                             final double itemTotal = countNum * price;
                                             mCartItemListener.onItemClick(itemTotal);
                                         }

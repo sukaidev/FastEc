@@ -57,14 +57,25 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
             mIconSelectAll.setTextColor(ContextCompat.getColor(getContext(), R.color.app_main));
             mIconSelectAll.setTag(1);
             mAdapter.setIsSelectedAll(true);
+            // 更新数据状态
+            List<MultipleItemEntity> data = mAdapter.getData();
+            for (MultipleItemEntity entity : data) {
+                entity.setField(ShopCartItemFields.IS_SELECTED, true);
+            }
             // 更新RecyclerView的显示状态
             mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
         } else {
             mIconSelectAll.setTextColor(Color.GRAY);
             mIconSelectAll.setTag(0);
             mAdapter.setIsSelectedAll(false);
+            // 更新数据状态
+            List<MultipleItemEntity> data = mAdapter.getData();
+            for (MultipleItemEntity entity : data) {
+                entity.setField(ShopCartItemFields.IS_SELECTED, false);
+            }
             mAdapter.notifyItemRangeChanged(0, mAdapter.getItemCount());
         }
+        checkTotalPrice();
     }
 
     @OnClick(R2.id.tv_top_shop_cart_remove_select)
@@ -100,14 +111,21 @@ public class ShopCartDelegate extends BottomItemDelegate implements ISuccess, IC
         for (MultipleItemEntity entity : data) {
             entity.setField(ShopCartItemFields.POSITION, i++);
         }
+        // 检测商品数量
         checkItemCount();
+        checkTotalPrice();
     }
 
     @OnClick(R2.id.tv_top_shop_cart_clear)
     void onClickClear() {
         mAdapter.getData().clear();
-        mAdapter.notifyDataSetChanged();
         checkItemCount();
+        // 更新全选图标状态
+        mIconSelectAll.setTextColor(Color.GRAY);
+        mIconSelectAll.setTag(0);
+        mAdapter.setIsSelectedAll(false);
+        mAdapter.notifyDataSetChanged();
+        checkTotalPrice();
     }
 
     private void checkItemCount() {

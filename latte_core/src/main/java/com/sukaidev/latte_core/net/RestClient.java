@@ -68,10 +68,15 @@ public class RestClient {
         this.LOADER_STYLE = loaderStyle;
     }
 
+
     public static RestClientBuilder builder() {
         return new RestClientBuilder();
     }
 
+    /**
+     * 发起网络请求
+     * @param method 请求方法
+     */
     private void request(HttpMethod method) {
         final RestService service = RestCreator.getRestService();
         Call<String> call = null;

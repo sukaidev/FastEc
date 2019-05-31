@@ -220,23 +220,23 @@ public class GoodsDetailDelegate extends LatteDelegate implements AppBarLayout.O
         mShopCount++;
         mTvAmount.setVisibility(View.VISIBLE);
         mTvAmount.setText(String.valueOf(mShopCount));
+
+        onBackPressedSupport();
+
         // 向服务器更新数据
         RestClient.builder()
-                .url("")
+                .url("update_shop_cart.php")
+                .params("goodsId",mGoodsId)
+                .params("count", mShopCount)
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-//                        mTvAmount.setVisibility(View.VISIBLE);
-//                        mTvAmount.setText(String.valueOf(mShopCount));
+                        mTvAmount.setVisibility(View.VISIBLE);
+                        mTvAmount.setText(String.valueOf(mShopCount));
                     }
                 })
-                .params("count", mShopCount)
                 .build()
                 .post();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
 }

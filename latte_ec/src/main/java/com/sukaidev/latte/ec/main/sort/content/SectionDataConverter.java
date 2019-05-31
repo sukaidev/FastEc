@@ -47,7 +47,6 @@ public class SectionDataConverter {
                 dataList.add(new SectionBean(itemEntity));
             }
         }
-
         return dataList;
     }
 }

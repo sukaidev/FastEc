@@ -17,4 +17,5 @@ public class ScaleUpAnimation extends BaseViewAnimator {
                 ObjectAnimator.ofFloat(target,"scaleY",0.8f,1f,1.4f,1.2f,1)
         );
     }
+
 }

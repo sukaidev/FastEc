@@ -4,10 +4,10 @@ apply plugin: 'com.mob.sdk'
 android {
     signingConfigs {
         debug {
-            storeFile file('C:\\Users\\SHH\\.android\\debug.keystore')
-            storePassword 'su7hai2hong80207'
-            keyAlias = 'personal'
-            keyPassword 'qq923201817'
+            storeFile file('********')
+            storePassword '********'
+            keyAlias = '********'
+            keyPassword '********'
         }
     }
     compileSdkVersion 28
